@@ -1,0 +1,7 @@
+C:\codex\Formula 1\F1TrackMapper\publish\win-x64-v6\F1TrackMapper.pdb
+C:\codex\Formula 1\F1TrackMapper\publish\win-x64-v6\D3DCompiler_47_cor3.dll
+C:\codex\Formula 1\F1TrackMapper\publish\win-x64-v6\PenImc_cor3.dll
+C:\codex\Formula 1\F1TrackMapper\publish\win-x64-v6\PresentationNative_cor3.dll
+C:\codex\Formula 1\F1TrackMapper\publish\win-x64-v6\vcruntime140_cor3.dll
+C:\codex\Formula 1\F1TrackMapper\publish\win-x64-v6\wpfgfx_cor3.dll
+C:\codex\Formula 1\F1TrackMapper\publish\win-x64-v6\F1TrackMapper.exe

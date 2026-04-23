@@ -1,0 +1,17 @@
+C:\codex\Formula 1\F1TrackMapper\App.xaml
+C:\codex\Formula 1\F1TrackMapper\App.xaml.cs
+C:\codex\Formula 1\F1TrackMapper\F1TrackMapper.csproj
+C:\codex\Formula 1\F1TrackMapper\MainWindow.xaml
+C:\codex\Formula 1\F1TrackMapper\MainWindow.xaml.cs
+C:\codex\Formula 1\F1TrackMapper\Models\CalendarEntry.cs
+C:\codex\Formula 1\F1TrackMapper\Models\CircuitDefinition.cs
+C:\codex\Formula 1\F1TrackMapper\Models\DriverModels.cs
+C:\codex\Formula 1\F1TrackMapper\Models\OpenF1Dtos.cs
+C:\codex\Formula 1\F1TrackMapper\Models\TrackMarker.cs
+C:\codex\Formula 1\F1TrackMapper\Services\ActualCircuitBuilder.cs
+C:\codex\Formula 1\F1TrackMapper\Services\CircuitCatalog.cs
+C:\codex\Formula 1\F1TrackMapper\Services\MockLiveTimingService.cs
+C:\codex\Formula 1\F1TrackMapper\Services\OpenF1ApiClient.cs
+C:\codex\Formula 1\F1TrackMapper\Services\OpenF1LiveTimingService.cs
+C:\codex\Formula 1\F1TrackMapper\Utils\AppVersionInfo.cs
+C:\codex\Formula 1\F1TrackMapper\ViewModels\MainViewModel.cs

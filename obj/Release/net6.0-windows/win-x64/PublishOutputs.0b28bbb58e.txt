@@ -1,0 +1,2 @@
+C:\codex\Formula 1\F1TrackMapper\publish\win-x64-v25-indian-reference-pass\F1TrackMapper.pdb
+C:\codex\Formula 1\F1TrackMapper\publish\win-x64-v25-indian-reference-pass\F1TrackMapper.exe

@@ -1,0 +1,3754 @@
+﻿F1TrackMapper - Full Source Export
+Generated: 2026-04-22 13:38:17
+Total Files: 17
+
+============================================================
+FILE: C:\codex\Formula 1\F1TrackMapper\App.xaml
+============================================================
+<Application x:Class="F1TrackMapper.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+    </Application.Resources>
+</Application>
+
+============================================================
+FILE: C:\codex\Formula 1\F1TrackMapper\App.xaml.cs
+============================================================
+using System.Windows;
+
+namespace F1TrackMapper;
+
+public partial class App : Application
+{
+}
+
+============================================================
+FILE: C:\codex\Formula 1\F1TrackMapper\F1TrackMapper.csproj
+============================================================
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Teams\*.png" />
+  </ItemGroup>
+</Project>
+
+============================================================
+FILE: C:\codex\Formula 1\F1TrackMapper\MainWindow.xaml
+============================================================
+<Window x:Class="F1TrackMapper.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="F1 Track Mapper"
+        Width="1360"
+        Height="820"
+        MinWidth="1100"
+        MinHeight="680"
+        WindowStartupLocation="CenterScreen"
+        Background="#0A0B0E"
+        FontFamily="Bahnschrift">
+    <Window.Resources>
+        <SolidColorBrush x:Key="AppBlackBrush" Color="#0A0B0E" />
+        <SolidColorBrush x:Key="AppRedBrush" Color="#E10600" />
+        <SolidColorBrush x:Key="AppRedSoftBrush" Color="#7AE10600" />
+        <SolidColorBrush x:Key="AppPanelBrush" Color="#242B35" />
+        <SolidColorBrush x:Key="AppPanelRaisedBrush" Color="#303743" />
+        <SolidColorBrush x:Key="AppPanelAltBrush" Color="#20262F" />
+        <SolidColorBrush x:Key="AppBorderBrush" Color="#45FFFFFF" />
+        <SolidColorBrush x:Key="AppTextBrush" Color="#F8FAFD" />
+        <SolidColorBrush x:Key="AppTextMutedBrush" Color="#C1CAD5" />
+        <SolidColorBrush x:Key="AppTextSoftBrush" Color="#95A1AF" />
+        <SolidColorBrush x:Key="AppTrackShellBrush" Color="#11161E" />
+        <SolidColorBrush x:Key="AppAccentContrastBrush" Color="#070707" />
+        <SolidColorBrush x:Key="AppTrackOutlineBrush" Color="#0F1319" />
+        <SolidColorBrush x:Key="AppTrackGlowBrush" Color="#3AE10600" />
+        <SolidColorBrush x:Key="AppTrackLaneBrush" Color="#F8FAFC" />
+        <SolidColorBrush x:Key="AppTrackEdgeBrush" Color="#18202B" />
+        <SolidColorBrush x:Key="AppTurnCardBrush" Color="#D9141820" />
+        <SolidColorBrush x:Key="AppPitBaseBrush" Color="#6F5310" />
+        <SolidColorBrush x:Key="AppPitDashBrush" Color="#FFC84A" />
+        <SolidColorBrush x:Key="AppCanvasFrameBrush" Color="#20FFFFFF" />
+
+        <LinearGradientBrush x:Key="WindowBackdropBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#11161D" Offset="0" />
+            <GradientStop Color="#1C2430" Offset="0.42" />
+            <GradientStop Color="#0F141B" Offset="1" />
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="PanelBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#2C3440" Offset="0" />
+            <GradientStop Color="#222A34" Offset="1" />
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="HeroPanelBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#353E4B" Offset="0" />
+            <GradientStop Color="#222A34" Offset="0.7" />
+            <GradientStop Color="#1E252E" Offset="1" />
+        </LinearGradientBrush>
+
+        <Style x:Key="CardShellStyle" TargetType="Border">
+            <Setter Property="Background" Value="{DynamicResource PanelBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource AppBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="24" />
+        </Style>
+
+        <Style x:Key="SectionTitleStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+        </Style>
+
+        <Style x:Key="BodyStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource AppTextMutedBrush}" />
+            <Setter Property="FontSize" Value="13" />
+        </Style>
+
+        <Style x:Key="ZoomButtonStyle" TargetType="Button">
+            <Setter Property="Padding" Value="10,6" />
+            <Setter Property="Margin" Value="0,0,8,0" />
+            <Setter Property="MinHeight" Value="34" />
+            <Setter Property="Background" Value="{DynamicResource AppPanelRaisedBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource AppTextBrush}" />
+            <Setter Property="BorderBrush" Value="#32FFFFFF" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+
+        <Style x:Key="StatPillStyle" TargetType="Border">
+            <Setter Property="Padding" Value="12,8" />
+            <Setter Property="Margin" Value="0,0,10,0" />
+            <Setter Property="CornerRadius" Value="14" />
+            <Setter Property="Background" Value="{DynamicResource AppPanelRaisedBrush}" />
+            <Setter Property="BorderBrush" Value="#20FFFFFF" />
+            <Setter Property="BorderThickness" Value="1" />
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="{DynamicResource WindowBackdropBrush}">
+        <Grid Margin="22">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="324" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="348" />
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0"
+                    Margin="0,0,18,0"
+                    Padding="0"
+                    Style="{StaticResource CardShellStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0"
+                            Padding="22,20,22,18"
+                            Background="{DynamicResource HeroPanelBrush}"
+                            BorderBrush="{DynamicResource AppRedSoftBrush}"
+                            BorderThickness="0,0,0,1"
+                            CornerRadius="24,24,0,0">
+                        <StackPanel>
+                            <Border Width="82"
+                                    Height="6"
+                                    HorizontalAlignment="Left"
+                                    CornerRadius="3"
+                                    Background="{DynamicResource AppRedBrush}" />
+                            <TextBlock Margin="0,16,0,0"
+                                       FontSize="32"
+                                       FontWeight="Bold"
+                                       Foreground="{DynamicResource AppTextBrush}"
+                                       Text="F1 Track Mapper" />
+                            <TextBlock Margin="0,8,0,0"
+                                       Style="{StaticResource BodyStyle}"
+                                       Text="Real circuit geometry, team-branded driver chips, and a race-control layout inspired by Formula 1 broadcast graphics." />
+                        </StackPanel>
+                    </Border>
+
+                    <ScrollViewer Grid.Row="1"
+                                  VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="22,18,22,22">
+                            <Border Padding="18"
+                                    Style="{StaticResource CardShellStyle}">
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource SectionTitleStyle}" Text="Race Weekend" />
+                                    <ComboBox Margin="0,12,0,0"
+                                              Padding="10,7"
+                                              Background="{DynamicResource AppPanelRaisedBrush}"
+                                              Foreground="{DynamicResource AppTextBrush}"
+                                              BorderBrush="#35FFFFFF"
+                                              BorderThickness="1"
+                                              ItemsSource="{Binding Weekends}"
+                                              SelectedItem="{Binding SelectedWeekend}"
+                                              DisplayMemberPath="DisplayName" />
+                                    <TextBlock Margin="0,14,0,0"
+                                               FontSize="20"
+                                               FontWeight="Bold"
+                                               Foreground="{DynamicResource AppTextBrush}"
+                                               Text="{Binding FocusWeekendName}" />
+                                    <TextBlock Margin="0,5,0,0"
+                                               Style="{StaticResource BodyStyle}"
+                                               Text="{Binding FocusWeekendDate}" />
+                                    <Border Margin="0,14,0,0"
+                                            Padding="10,8"
+                                            CornerRadius="12"
+                                            Background="{DynamicResource AppRedSoftBrush}">
+                                        <TextBlock Foreground="#FFE2E0"
+                                                   FontSize="12"
+                                                   FontWeight="SemiBold"
+                                                   Text="{Binding CalendarSelectionNote}" />
+                                    </Border>
+
+                                    <Button Margin="0,14,0,0"
+                                            Padding="12,9"
+                                            Click="TelemetryToggle_Click"
+                                            Background="{DynamicResource AppPanelRaisedBrush}"
+                                            Foreground="{DynamicResource AppTextBrush}"
+                                            BorderBrush="{DynamicResource AppRedBrush}"
+                                            BorderThickness="1"
+                                            FontWeight="Bold"
+                                            Content="{Binding TelemetryToggleLabel}" />
+                                    <TextBlock Margin="0,10,0,0"
+                                               Style="{StaticResource BodyStyle}"
+                                               TextWrapping="Wrap"
+                                               Text="{Binding TelemetryToggleCaption}" />
+                                </StackPanel>
+                            </Border>
+
+                            <Border Margin="0,16,0,0"
+                                    Padding="18"
+                                    Style="{StaticResource CardShellStyle}">
+                                <StackPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Left"
+                                                   Style="{StaticResource SectionTitleStyle}"
+                                                   Text="Theme Garage" />
+                                        <Border DockPanel.Dock="Right"
+                                                Padding="8,4"
+                                                CornerRadius="10"
+                                                Background="{DynamicResource AppRedSoftBrush}">
+                                            <TextBlock Foreground="{DynamicResource AppTextBrush}"
+                                                       FontSize="11"
+                                                       FontWeight="Bold"
+                                                       Text="COOLORS SETS" />
+                                        </Border>
+                                    </DockPanel>
+                                    <ComboBox x:Name="ThemeSelector"
+                                              Margin="0,12,0,0"
+                                              Padding="10,7"
+                                              Background="{DynamicResource AppPanelRaisedBrush}"
+                                              Foreground="{DynamicResource AppTextBrush}"
+                                              BorderBrush="#35FFFFFF"
+                                              BorderThickness="1"
+                                              SelectionChanged="ThemeSelector_SelectionChanged">
+                                        <ComboBoxItem Tag="RossoCarbon" Content="Rosso Carbon" />
+                                        <ComboBoxItem Tag="GraphiteGold" Content="Graphite Gold" />
+                                        <ComboBoxItem Tag="AquaVelocity" Content="Aqua Velocity" />
+                                        <ComboBoxItem Tag="IceCircuit" Content="Ice Circuit" />
+                                        <ComboBoxItem Tag="EmeraldNight" Content="Emerald Night" />
+                                        <ComboBoxItem Tag="SunsetGrid" Content="Sunset Grid" />
+                                        <ComboBoxItem Tag="VioletKerb" Content="Violet Kerb" />
+                                        <ComboBoxItem Tag="ArcticSignal" Content="Arctic Signal" />
+                                    </ComboBox>
+                                    <StackPanel Margin="0,12,0,0" Orientation="Horizontal">
+                                        <Border Width="42"
+                                                Height="16"
+                                                CornerRadius="8"
+                                                Background="{DynamicResource AppPanelBrush}" />
+                                        <Border Width="42"
+                                                Height="16"
+                                                Margin="8,0,0,0"
+                                                CornerRadius="8"
+                                                Background="{DynamicResource AppRedBrush}" />
+                                    </StackPanel>
+                                    <TextBlock Margin="0,12,0,0"
+                                               Style="{StaticResource BodyStyle}"
+                                               TextWrapping="Wrap"
+                                               Text="Choose from preloaded two-tone palettes inspired by Coolors-style combinations and tuned for this race-control layout." />
+                                </StackPanel>
+                            </Border>
+
+                            <Border Margin="0,16,0,0"
+                                    Padding="18"
+                                    Style="{StaticResource CardShellStyle}">
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource SectionTitleStyle}" Text="Circuit Notes" />
+                                    <TextBlock Margin="0,12,0,0"
+                                               FontSize="27"
+                                               FontWeight="Bold"
+                                               Foreground="{DynamicResource AppTextBrush}"
+                                               Text="{Binding SelectedCircuitName}" />
+                                    <TextBlock Margin="0,6,0,0"
+                                               Style="{StaticResource BodyStyle}"
+                                               TextWrapping="Wrap"
+                                               Text="{Binding SelectedCircuitSummary}" />
+
+                                    <WrapPanel Margin="0,16,0,0">
+                                        <Border Style="{StaticResource StatPillStyle}">
+                                            <StackPanel>
+                                                <TextBlock Foreground="{DynamicResource AppTextSoftBrush}"
+                                                           FontSize="11"
+                                                           Text="Track State" />
+                                                <TextBlock Margin="0,4,0,0"
+                                                           Foreground="{DynamicResource AppTextBrush}"
+                                                           FontWeight="SemiBold"
+                                                           Text="{Binding FeedStatusBadge}" />
+                                            </StackPanel>
+                                        </Border>
+                                        <Border Style="{StaticResource StatPillStyle}">
+                                            <StackPanel>
+                                                <TextBlock Foreground="{DynamicResource AppTextSoftBrush}"
+                                                           FontSize="11"
+                                                           Text="Stats" />
+                                                <TextBlock Margin="0,4,0,0"
+                                                           Foreground="{DynamicResource AppTextBrush}"
+                                                           FontWeight="SemiBold"
+                                                           Text="{Binding TrackStatsLine}" />
+                                            </StackPanel>
+                                        </Border>
+                                    </WrapPanel>
+
+                                    <TextBlock Margin="0,16,0,0"
+                                               Style="{StaticResource BodyStyle}"
+                                               TextWrapping="Wrap"
+                                               Text="{Binding TelemetryModeText}" />
+                                </StackPanel>
+                            </Border>
+                            <Border Margin="0,16,0,0"
+                                    Padding="18"
+                                    Style="{StaticResource CardShellStyle}">
+                                <StackPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Left"
+                                                   Style="{StaticResource SectionTitleStyle}"
+                                                   Text="Map Markers" />
+                                        <Border DockPanel.Dock="Right"
+                                                Padding="8,4"
+                                                CornerRadius="10"
+                                                Background="{DynamicResource AppRedSoftBrush}">
+                                            <TextBlock Foreground="#FFF2F1"
+                                                       FontSize="11"
+                                                       FontWeight="Bold"
+                                                       Text="LIVE STYLE" />
+                                        </Border>
+                                    </DockPanel>
+
+                                    <ItemsControl Margin="0,12,0,0" ItemsSource="{Binding SectorCards}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Margin="0,0,0,10"
+                                                        Padding="12"
+                                                        Background="{DynamicResource AppPanelRaisedBrush}"
+                                                        CornerRadius="16"
+                                                        BorderBrush="#18FFFFFF"
+                                                        BorderThickness="1">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="48" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <Border Width="42"
+                                                                Height="42"
+                                                                CornerRadius="12"
+                                                                Background="{Binding AccentBrush}">
+                                                            <TextBlock HorizontalAlignment="Center"
+                                                                       VerticalAlignment="Center"
+                                                                       Foreground="{DynamicResource AppAccentContrastBrush}"
+                                                                       FontWeight="Bold"
+                                                                       Text="{Binding Title}" />
+                                                        </Border>
+
+                                                        <StackPanel Grid.Column="1" Margin="12,0,0,0">
+                                                            <TextBlock Foreground="{DynamicResource AppTextBrush}"
+                                                                       FontWeight="SemiBold"
+                                                                       Text="{Binding Subtitle}" />
+                                                            <TextBlock Margin="0,3,0,0"
+                                                                       Style="{StaticResource BodyStyle}"
+                                                                       TextWrapping="Wrap"
+                                                                       Text="{Binding Description}" />
+                                                        </StackPanel>
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Margin="0,16,0,0"
+                                    Padding="18"
+                                    Style="{StaticResource CardShellStyle}">
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource SectionTitleStyle}" Text="Legend" />
+                                    <TextBlock Margin="0,12,0,0"
+                                               Style="{StaticResource BodyStyle}"
+                                               TextWrapping="Wrap"
+                                               Text="Driver tags stay compact and team-branded so the circuit outline remains readable even on tighter tracks." />
+                                    <TextBlock Margin="0,8,0,0"
+                                               Style="{StaticResource BodyStyle}"
+                                               TextWrapping="Wrap"
+                                               Text="Pit lane overlays and marker callouts sit inside the same race-control canvas, styled to feel closer to F1 timing screens." />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+
+            <Border Grid.Column="1"
+                    Margin="0,0,18,0"
+                    Padding="0"
+                    Style="{StaticResource CardShellStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0"
+                            Padding="22,18"
+                            Background="{DynamicResource HeroPanelBrush}"
+                            BorderBrush="{DynamicResource AppRedSoftBrush}"
+                            BorderThickness="0,0,0,1"
+                            CornerRadius="24,24,0,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel>
+                                <TextBlock FontSize="17"
+                                           FontWeight="SemiBold"
+                                           Foreground="{DynamicResource AppTextMutedBrush}"
+                                           Text="TRACK CONTROL" />
+                                <TextBlock Margin="0,6,0,0"
+                                           FontSize="34"
+                                           FontWeight="Bold"
+                                           Foreground="{DynamicResource AppTextBrush}"
+                                           Text="{Binding FocusWeekendName}" />
+                                <TextBlock Margin="0,6,0,0"
+                                           Foreground="{DynamicResource AppTextMutedBrush}"
+                                           FontSize="14"
+                                           TextWrapping="Wrap"
+                                           Text="{Binding StatusText}" />
+                            </StackPanel>
+
+                            <Border Grid.Column="1"
+                                    Padding="14,10"
+                                    VerticalAlignment="Top"
+                                    Background="{DynamicResource AppPanelAltBrush}"
+                                    CornerRadius="16"
+                                    BorderBrush="{DynamicResource AppRedSoftBrush}"
+                                    BorderThickness="1">
+                                <StackPanel>
+                                    <TextBlock Foreground="{DynamicResource AppTextMutedBrush}"
+                                               FontSize="11"
+                                               FontWeight="SemiBold"
+                                               Text="Feed Status" />
+                                    <TextBlock Margin="0,4,0,0"
+                                               Foreground="{DynamicResource AppRedBrush}"
+                                               FontSize="13"
+                                               FontWeight="Bold"
+                                               Text="{Binding FeedStatusBadge}" />
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Row="1"
+                            Margin="18,16,18,0"
+                            Padding="14,12"
+                            Background="{DynamicResource AppPanelRaisedBrush}"
+                            CornerRadius="18"
+                            BorderBrush="#20FFFFFF"
+                            BorderThickness="1">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock VerticalAlignment="Center"
+                                       Foreground="{DynamicResource AppTextBrush}"
+                                       FontSize="13"
+                                       FontWeight="SemiBold"
+                                       Text="Map Zoom" />
+
+                            <StackPanel Grid.Column="1"
+                                        HorizontalAlignment="Center"
+                                        Orientation="Horizontal">
+                                <Button Style="{StaticResource ZoomButtonStyle}" Click="ZoomOut_Click" Content="-" Width="34" />
+                                <Button Style="{StaticResource ZoomButtonStyle}" Click="ZoomReset_Click" Content="Fit" MinWidth="56" />
+                                <Button Style="{StaticResource ZoomButtonStyle}" Click="ZoomIn_Click" Content="+" Width="34" />
+                                <Slider Width="200"
+                                        Margin="4,0,0,0"
+                                        Minimum="0.75"
+                                        Maximum="1.85"
+                                        TickFrequency="0.05"
+                                        Value="{Binding MapZoom, Mode=TwoWay}" />
+                            </StackPanel>
+
+                            <TextBlock Grid.Column="2"
+                                       VerticalAlignment="Center"
+                                       Foreground="{DynamicResource AppTextBrush}"
+                                       FontSize="14"
+                                       FontWeight="Bold"
+                                       Text="{Binding MapZoomLabel}" />
+                        </Grid>
+                    </Border>
+                    <Border Grid.Row="2"
+                            Margin="18,16,18,0"
+                            Padding="14"
+                            Background="{DynamicResource AppTrackShellBrush}"
+                            CornerRadius="24"
+                            BorderBrush="#1AFFFFFF"
+                            BorderThickness="1"
+                            ClipToBounds="True">
+                        <Grid RenderTransformOrigin="0.5,0.5">
+                            <Grid.RenderTransform>
+                                <ScaleTransform ScaleX="{Binding MapZoom}" ScaleY="{Binding MapZoom}" />
+                            </Grid.RenderTransform>
+
+                            <Border Background="#0A0B0E"
+                                    CornerRadius="18" />
+
+                            <Canvas IsHitTestVisible="False">
+                                <Rectangle Width="960"
+                                           Height="620"
+                                           Fill="#00000000"
+                                           Stroke="{DynamicResource AppCanvasFrameBrush}"
+                                           StrokeThickness="1"
+                                           RadiusX="16"
+                                           RadiusY="16" />
+
+                            </Canvas>
+
+                            <Viewbox Stretch="Uniform">
+                                <Grid Width="960" Height="620">
+                                    <Canvas Width="960" Height="620">
+                                        <Path Data="{Binding TrackGeometry}"
+                                              Stroke="{DynamicResource AppTrackOutlineBrush}"
+                                              StrokeThickness="38"
+                                              StrokeStartLineCap="Round"
+                                              StrokeEndLineCap="Round"
+                                              StrokeLineJoin="Round" />
+                                        <Path Data="{Binding TrackGeometry}"
+                                              Stroke="{DynamicResource AppTrackGlowBrush}"
+                                              StrokeThickness="27"
+                                              StrokeStartLineCap="Round"
+                                              StrokeEndLineCap="Round"
+                                              StrokeLineJoin="Round" />
+                                        <Path Data="{Binding TrackGeometry}"
+                                              Stroke="{DynamicResource AppTrackLaneBrush}"
+                                              StrokeThickness="16"
+                                              StrokeStartLineCap="Round"
+                                              StrokeEndLineCap="Round"
+                                              StrokeLineJoin="Round" />
+                                        <Path Data="{Binding TrackGeometry}"
+                                              Stroke="{DynamicResource AppTrackEdgeBrush}"
+                                              StrokeThickness="6"
+                                              StrokeStartLineCap="Round"
+                                              StrokeEndLineCap="Round"
+                                              StrokeLineJoin="Round" />
+                                        <Path Data="{Binding PitLaneGeometry}"
+                                              Stroke="{DynamicResource AppPitBaseBrush}"
+                                              StrokeThickness="13"
+                                              StrokeStartLineCap="Round"
+                                              StrokeEndLineCap="Round"
+                                              StrokeLineJoin="Round" />
+                                        <Path Data="{Binding PitLaneGeometry}"
+                                              Stroke="{DynamicResource AppPitDashBrush}"
+                                              StrokeThickness="6"
+                                              StrokeDashArray="5,4"
+                                              StrokeStartLineCap="Round"
+                                              StrokeEndLineCap="Round"
+                                              StrokeLineJoin="Round" />
+                                    </Canvas>
+
+                                    <ItemsControl ItemsSource="{Binding SectorMarkers}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <Canvas Width="960" Height="620" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemContainerStyle>
+                                            <Style TargetType="ContentPresenter">
+                                                <Setter Property="Canvas.Left" Value="{Binding X}" />
+                                                <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                                                <Setter Property="Panel.ZIndex" Value="3" />
+                                            </Style>
+                                        </ItemsControl.ItemContainerStyle>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel>
+                                                    <Border Width="40"
+                                                            Height="40"
+                                                            CornerRadius="20"
+                                                            Background="{Binding AccentBrush}"
+                                                            BorderBrush="#B0FFFFFF"
+                                                            BorderThickness="2">
+                                                        <TextBlock HorizontalAlignment="Center"
+                                                                   VerticalAlignment="Center"
+                                                                   Foreground="{DynamicResource AppAccentContrastBrush}"
+                                                                   FontWeight="Bold"
+                                                                   Text="{Binding Title}" />
+                                                    </Border>
+                                                    <TextBlock Margin="-6,6,0,0"
+                                                               Foreground="{DynamicResource AppTextBrush}"
+                                                               FontSize="11"
+                                                               FontWeight="SemiBold"
+                                                               Text="{Binding Subtitle}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+
+                                    <ItemsControl ItemsSource="{Binding TurnMarkers}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <Canvas Width="960" Height="620" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemContainerStyle>
+                                            <Style TargetType="ContentPresenter">
+                                                <Setter Property="Canvas.Left" Value="{Binding X}" />
+                                                <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                                                <Setter Property="Panel.ZIndex" Value="2" />
+                                            </Style>
+                                        </ItemsControl.ItemContainerStyle>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Padding="8,5"
+                                                        Background="{DynamicResource AppTurnCardBrush}"
+                                                        CornerRadius="12"
+                                                        BorderBrush="#2AFFFFFF"
+                                                        BorderThickness="1">
+                                                    <StackPanel>
+                                                        <TextBlock Foreground="{DynamicResource AppTextBrush}"
+                                                                   FontSize="11"
+                                                                   FontWeight="Bold"
+                                                                   Text="{Binding Title}" />
+                                                        <TextBlock Foreground="{DynamicResource AppTextMutedBrush}"
+                                                                   FontSize="10"
+                                                                   Text="{Binding Subtitle}" />
+                                                    </StackPanel>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    <ItemsControl ItemsSource="{Binding Drivers}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <Canvas Width="960" Height="620" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemContainerStyle>
+                                            <Style TargetType="ContentPresenter">
+                                                <Setter Property="Canvas.Left" Value="{Binding X}" />
+                                                <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                                                <Setter Property="Panel.ZIndex" Value="5" />
+                                            </Style>
+                                        </ItemsControl.ItemContainerStyle>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Padding="5,4"
+                                                        Background="{Binding SurfaceBrush}"
+                                                        CornerRadius="11"
+                                                        BorderBrush="{Binding AccentBrush}"
+                                                        BorderThickness="2">
+                                                    <Border.Effect>
+                                                        <DropShadowEffect BlurRadius="12"
+                                                                          Direction="270"
+                                                                          Opacity="0.34"
+                                                                          ShadowDepth="2" />
+                                                    </Border.Effect>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Border Width="34"
+                                                                Height="22"
+                                                                Padding="5,4"
+                                                                CornerRadius="7"
+                                                                Background="{Binding LogoPlateBrush}">
+                                                            <Image Source="{Binding TeamLogoPath}"
+                                                                   Stretch="Uniform"
+                                                                   SnapsToDevicePixels="True"
+                                                                   RenderOptions.BitmapScalingMode="HighQuality" />
+                                                        </Border>
+                                                        <StackPanel Margin="6,0,0,0">
+                                                            <TextBlock Foreground="{Binding PrimaryTextBrush}"
+                                                                       FontSize="12"
+                                                                       FontWeight="Bold"
+                                                                       Text="{Binding Code}" />
+                                                            <TextBlock Foreground="{Binding SecondaryTextBrush}"
+                                                                       FontSize="8"
+                                                                       FontWeight="SemiBold"
+                                                                       Text="{Binding PositionLabel}" />
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </Grid>
+                            </Viewbox>
+                        </Grid>
+                    </Border>
+
+                    <DockPanel Grid.Row="3" Margin="22,16,22,18">
+                        <TextBlock DockPanel.Dock="Left"
+                                   Foreground="{DynamicResource AppTextMutedBrush}"
+                                   FontSize="12"
+                                   Text="{Binding FooterHint}" />
+                        <TextBlock DockPanel.Dock="Right"
+                                   Foreground="{DynamicResource AppTextBrush}"
+                                   FontSize="12"
+                                   FontWeight="SemiBold"
+                                   Text="{Binding LastUpdatedLabel}" />
+                    </DockPanel>
+                </Grid>
+            </Border>
+
+            <Border Grid.Column="2"
+                    Padding="0"
+                    Style="{StaticResource CardShellStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0"
+                            Padding="22,20,22,18"
+                            Background="{DynamicResource HeroPanelBrush}"
+                            BorderBrush="{DynamicResource AppRedSoftBrush}"
+                            BorderThickness="0,0,0,1"
+                            CornerRadius="24,24,0,0">
+                        <StackPanel>
+                            <TextBlock FontSize="30"
+                                       FontWeight="Bold"
+                                       Foreground="{DynamicResource AppTextBrush}"
+                                       Text="Leaderboard" />
+                            <TextBlock Margin="0,8,0,0"
+                                       Style="{StaticResource BodyStyle}"
+                                       TextWrapping="Wrap"
+                                       Text="Team-colored timing cards now sit inside a cleaner F1-inspired race-control panel with stronger contrast and sharper edges." />
+                        </StackPanel>
+                    </Border>
+
+                    <ScrollViewer Grid.Row="1"
+                                  Margin="18,18,18,18"
+                                  VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding Drivers}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Margin="0,0,0,12"
+                                            Padding="15"
+                                            Background="{Binding SurfaceBrush}"
+                                            CornerRadius="18"
+                                            BorderBrush="{Binding AccentBrush}"
+                                            BorderThickness="1.4">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="52" />
+                                                <ColumnDefinition Width="46" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Border Width="40"
+                                                    Height="40"
+                                                    CornerRadius="20"
+                                                    Background="{Binding AccentBrush}">
+                                                <TextBlock HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"
+                                                           Foreground="{DynamicResource AppAccentContrastBrush}"
+                                                           FontWeight="Bold"
+                                                           FontSize="14"
+                                                           Text="{Binding Position}" />
+                                            </Border>
+
+                                            <Border Grid.Column="1"
+                                                    Width="38"
+                                                    Height="38"
+                                                    Margin="8,0,0,0"
+                                                    Padding="6"
+                                                    CornerRadius="12"
+                                                    Background="{Binding LogoPlateBrush}">
+                                                <Image Source="{Binding TeamLogoPath}"
+                                                       Stretch="Uniform"
+                                                       SnapsToDevicePixels="True"
+                                                       RenderOptions.BitmapScalingMode="HighQuality" />
+                                            </Border>
+
+                                            <StackPanel Grid.Column="2" Margin="14,0,0,0">
+                                                <TextBlock Foreground="{Binding PrimaryTextBrush}"
+                                                           FontSize="15"
+                                                           FontWeight="Bold"
+                                                           Text="{Binding DriverLine}" />
+                                                <TextBlock Margin="0,4,0,0"
+                                                           Foreground="{Binding SecondaryTextBrush}"
+                                                           FontSize="13"
+                                                           Text="{Binding TeamLine}" />
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="3" HorizontalAlignment="Right">
+                                                <TextBlock HorizontalAlignment="Right"
+                                                           Foreground="{Binding PrimaryTextBrush}"
+                                                           FontWeight="SemiBold"
+                                                           Text="{Binding GapText}" />
+                                                <TextBlock Margin="0,4,0,0"
+                                                           HorizontalAlignment="Right"
+                                                           Foreground="{Binding SecondaryTextBrush}"
+                                                           FontSize="12"
+                                                           Text="{Binding SpeedText}" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>
+
+
+
+
+
+
+
+
+============================================================
+FILE: C:\codex\Formula 1\F1TrackMapper\MainWindow.xaml.cs
+============================================================
+using System;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using F1TrackMapper.ViewModels;
+
+namespace F1TrackMapper;
+
+public partial class MainWindow : Window
+{
+    private readonly MainViewModel _viewModel = new();
+    private readonly Dictionary<string, UiThemePreset> _themePresets = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ["RossoCarbon"] = new("Rosso Carbon", "#2B2D42", "#EF233C"),
+        ["GraphiteGold"] = new("Graphite Gold", "#2D3142", "#FCA311"),
+        ["AquaVelocity"] = new("Aqua Velocity", "#0B132B", "#5BC0BE"),
+        ["IceCircuit"] = new("Ice Circuit", "#1D3557", "#A8DADC"),
+        ["EmeraldNight"] = new("Emerald Night", "#1B4332", "#74C69D"),
+        ["SunsetGrid"] = new("Sunset Grid", "#3D405B", "#E07A5F"),
+        ["VioletKerb"] = new("Violet Kerb", "#2B193D", "#C77DFF"),
+        ["ArcticSignal"] = new("Arctic Signal", "#264653", "#E9F5F2")
+    };
+
+    public MainWindow()
+    {
+        InitializeComponent();
+        DataContext = _viewModel;
+        Loaded += OnLoaded;
+    }
+
+    private void OnLoaded(object sender, RoutedEventArgs e)
+    {
+        if (ThemeSelector.Items.Count > 0)
+        {
+            ThemeSelector.SelectedIndex = 0;
+        }
+        else
+        {
+            ApplyTheme("RossoCarbon");
+        }
+    }
+
+    private void ThemeSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (ThemeSelector.SelectedItem is not ComboBoxItem item || item.Tag is not string key)
+        {
+            return;
+        }
+
+        ApplyTheme(key);
+    }
+
+    private void ApplyTheme(string key)
+    {
+        if (!_themePresets.TryGetValue(key, out var theme))
+        {
+            return;
+        }
+
+        var baseColor = ParseColor(theme.BaseHex);
+        var accentColor = ParseColor(theme.AccentHex);
+        var appBlack = Darken(baseColor, 0.34);
+        var panel = Lighten(baseColor, 0.08);
+        var panelRaised = Lighten(baseColor, 0.14);
+        var panelAlt = Blend(baseColor, accentColor, 0.16);
+        var trackShell = ParseColor("#0E1116");
+        var accentContrast = GetReadableText(accentColor);
+
+        SetBrushResource("AppBlackBrush", appBlack);
+        SetBrushResource("AppPanelBrush", panel);
+        SetBrushResource("AppPanelRaisedBrush", panelRaised);
+        SetBrushResource("AppPanelAltBrush", panelAlt);
+        SetBrushResource("AppBorderBrush", Color.FromArgb(0x45, 0xFF, 0xFF, 0xFF));
+        SetBrushResource("AppTextBrush", ParseColor("#F8FAFD"));
+        SetBrushResource("AppTextMutedBrush", ParseColor("#C9D2DC"));
+        SetBrushResource("AppTextSoftBrush", ParseColor("#98A5B4"));
+        SetBrushResource("AppTrackShellBrush", trackShell);
+        SetBrushResource("AppRedBrush", accentColor);
+        SetBrushResource("AppRedSoftBrush", Color.FromArgb(0x5A, accentColor.R, accentColor.G, accentColor.B));
+        SetBrushResource("AppAccentContrastBrush", accentContrast);
+        SetBrushResource("AppTrackOutlineBrush", Darken(baseColor, 0.58));
+        SetBrushResource("AppTrackGlowBrush", Color.FromArgb(0x52, accentColor.R, accentColor.G, accentColor.B));
+        SetBrushResource("AppTrackLaneBrush", ParseColor("#F8FAFC"));
+        SetBrushResource("AppTrackEdgeBrush", Darken(baseColor, 0.16));
+        SetBrushResource("AppTurnCardBrush", Color.FromArgb(0xD9, panelAlt.R, panelAlt.G, panelAlt.B));
+        SetBrushResource("AppPitBaseBrush", Blend(accentColor, ParseColor("#6F5310"), 0.35));
+        SetBrushResource("AppPitDashBrush", Blend(accentColor, Colors.White, 0.38));
+        SetBrushResource("AppCanvasFrameBrush", Color.FromArgb(0x24, 0xFF, 0xFF, 0xFF));
+
+
+        SetGradientResource("PanelBrush",
+            Lighten(baseColor, 0.12),
+            Lighten(baseColor, 0.05));
+
+        SetGradientResource("HeroPanelBrush",
+            Blend(Lighten(baseColor, 0.16), accentColor, 0.12),
+            Lighten(baseColor, 0.07),
+            Blend(baseColor, accentColor, 0.08));
+    }
+
+    private void SetBrushResource(string key, Color color)
+    {
+        var brush = new SolidColorBrush(color);
+        if (brush.CanFreeze)
+        {
+            brush.Freeze();
+        }
+
+        Resources[key] = brush;
+    }
+
+    private void SetGradientResource(string key, params Color[] colors)
+    {
+        var brush = new LinearGradientBrush
+        {
+            StartPoint = new Point(0, 0),
+            EndPoint = new Point(1, 1)
+        };
+
+        if (colors.Length == 1)
+        {
+            brush.GradientStops.Add(new GradientStop(colors[0], 0));
+        }
+        else
+        {
+            for (var index = 0; index < colors.Length; index++)
+            {
+                var offset = colors.Length == 1 ? 0 : (double)index / (colors.Length - 1);
+                brush.GradientStops.Add(new GradientStop(colors[index], offset));
+            }
+        }
+
+        if (brush.CanFreeze)
+        {
+            brush.Freeze();
+        }
+
+        Resources[key] = brush;
+    }
+
+    private static Color GetReadableText(Color background)
+    {
+        var luminance = ((0.299 * background.R) + (0.587 * background.G) + (0.114 * background.B)) / 255.0;
+        return luminance > 0.62 ? ParseColor("#102030") : ParseColor("#F8FAFD");
+    }
+
+    private static Color ParseColor(string hex)
+        => (Color)ColorConverter.ConvertFromString(hex);
+
+    private static Color Blend(Color left, Color right, double amount)
+    {
+        amount = Math.Max(0, Math.Min(1, amount));
+        return Color.FromArgb(
+            0xFF,
+            BlendChannel(left.R, right.R, amount),
+            BlendChannel(left.G, right.G, amount),
+            BlendChannel(left.B, right.B, amount));
+    }
+
+    private static Color Lighten(Color color, double amount)
+        => Blend(color, Colors.White, amount);
+
+    private static Color Darken(Color color, double amount)
+        => Blend(color, Colors.Black, amount);
+
+    private static byte BlendChannel(byte left, byte right, double amount)
+        => (byte)Math.Round(left + ((right - left) * amount));
+
+    private void ZoomOut_Click(object sender, RoutedEventArgs e)
+        => _viewModel.ZoomOut();
+
+    private void ZoomReset_Click(object sender, RoutedEventArgs e)
+        => _viewModel.ResetZoom();
+
+    private void ZoomIn_Click(object sender, RoutedEventArgs e)
+        => _viewModel.ZoomIn();
+
+    private async void TelemetryToggle_Click(object sender, RoutedEventArgs e)
+        => await _viewModel.ToggleTelemetryModeAsync();
+
+    protected override void OnClosed(EventArgs e)
+    {
+        _viewModel.Dispose();
+        base.OnClosed(e);
+    }
+
+    private sealed record UiThemePreset(string Name, string BaseHex, string AccentHex);
+}
+
+
+
+============================================================
+FILE: C:\codex\Formula 1\F1TrackMapper\Models\CalendarEntry.cs
+============================================================
+namespace F1TrackMapper.Models;
+
+public sealed record CalendarEntry(
+    int Round,
+    int MeetingKey,
+    int CircuitKey,
+    string GrandPrixName,
+    string OfficialName,
+    string CircuitShortName,
+    string Location,
+    string CountryName,
+    string CircuitInfoUrl,
+    string? CircuitImageUrl,
+    DateTimeOffset StartDate,
+    DateTimeOffset EndDate,
+    int Year)
+{
+    public string DisplayName => $"Round {Round:00}  •  {GrandPrixName}";
+    public string DateLabel => $"{StartDate:dd MMM} - {EndDate:dd MMM yyyy}";
+}
+
+============================================================
+FILE: C:\codex\Formula 1\F1TrackMapper\Models\CircuitDefinition.cs
+============================================================
+using System.Windows;
+using System.Windows.Media;
+
+namespace F1TrackMapper.Models;
+
+public sealed class CircuitDefinition
+{
+    private const double CanvasPadding = 28;
+
+    private readonly IReadOnlyList<Point> _trackPoints;
+    private readonly IReadOnlyList<Point>? _pitLanePoints;
+    private readonly double[] _segmentLengths;
+    private readonly double _totalLength;
+    private readonly Rect _bounds;
+    private readonly double _rawWidth;
+    private readonly double _rawHeight;
+
+    public CircuitDefinition(
+        string key,
+        string displayName,
+        string location,
+        string summary,
+        string accentHex,
+        double referenceLapSeconds,
+        double averageSpeedKph,
+        IReadOnlyList<Point> trackPoints,
+        IReadOnlyList<TrackMarker> markers,
+        IReadOnlyList<Point>? pitLanePoints = null)
+    {
+        if (trackPoints.Count < 3)
+        {
+            throw new ArgumentException("A circuit requires at least three points.", nameof(trackPoints));
+        }
+
+        Key = key;
+        DisplayName = displayName;
+        Location = location;
+        Summary = summary;
+        AccentHex = accentHex;
+        ReferenceLapSeconds = referenceLapSeconds;
+        AverageSpeedKph = averageSpeedKph;
+        Markers = markers;
+        _trackPoints = EnsureClosed(trackPoints);
+        _pitLanePoints = pitLanePoints?.Count >= 2 ? pitLanePoints.ToList() : null;
+
+        var minX = _trackPoints.Min(point => point.X);
+        var maxX = _trackPoints.Max(point => point.X);
+        var minY = _trackPoints.Min(point => point.Y);
+        var maxY = _trackPoints.Max(point => point.Y);
+
+        if (_pitLanePoints is not null && _pitLanePoints.Count > 0)
+        {
+            minX = Math.Min(minX, _pitLanePoints.Min(point => point.X));
+            maxX = Math.Max(maxX, _pitLanePoints.Max(point => point.X));
+            minY = Math.Min(minY, _pitLanePoints.Min(point => point.Y));
+            maxY = Math.Max(maxY, _pitLanePoints.Max(point => point.Y));
+        }
+
+        if (markers.Count > 0)
+        {
+            minX = Math.Min(minX, markers.Min(marker => marker.TrackPoint.X));
+            maxX = Math.Max(maxX, markers.Max(marker => marker.TrackPoint.X));
+            minY = Math.Min(minY, markers.Min(marker => marker.TrackPoint.Y));
+            maxY = Math.Max(maxY, markers.Max(marker => marker.TrackPoint.Y));
+        }
+
+        _bounds = new Rect(new Point(minX, minY), new Point(maxX, maxY));
+        _rawWidth = Math.Max(1, _bounds.Width);
+        _rawHeight = Math.Max(1, _bounds.Height);
+
+        _segmentLengths = new double[_trackPoints.Count - 1];
+        for (var index = 0; index < _trackPoints.Count - 1; index++)
+        {
+            var dx = _trackPoints[index + 1].X - _trackPoints[index].X;
+            var dy = _trackPoints[index + 1].Y - _trackPoints[index].Y;
+            _segmentLengths[index] = Math.Sqrt((dx * dx) + (dy * dy));
+            _totalLength += _segmentLengths[index];
+        }
+    }
+
+    public string Key { get; }
+    public string DisplayName { get; }
+    public string Location { get; }
+    public string Summary { get; }
+    public string AccentHex { get; }
+    public double ReferenceLapSeconds { get; }
+    public double AverageSpeedKph { get; }
+    public IReadOnlyList<TrackMarker> Markers { get; }
+    public IReadOnlyList<Point> RawTrackPoints => _trackPoints;
+
+    public Geometry CreateTrackGeometry(double width, double height)
+    {
+        var geometry = new StreamGeometry();
+        using var context = geometry.Open();
+
+        context.BeginFigure(MapToCanvas(_trackPoints[0], width, height), false, true);
+        context.PolyLineTo(_trackPoints.Skip(1).Select(point => MapToCanvas(point, width, height)).ToList(), true, true);
+
+        geometry.Freeze();
+        return geometry;
+    }
+
+    public Geometry? CreatePitLaneGeometry(double width, double height)
+    {
+        if (_pitLanePoints is null || _pitLanePoints.Count < 2)
+        {
+            return null;
+        }
+
+        var explicitPitGeometry = new StreamGeometry();
+        using var explicitPitContext = explicitPitGeometry.Open();
+        explicitPitContext.BeginFigure(MapToCanvas(_pitLanePoints[0], width, height), false, false);
+        explicitPitContext.PolyLineTo(_pitLanePoints.Skip(1).Select(point => MapToCanvas(point, width, height)).ToList(), true, true);
+        explicitPitGeometry.Freeze();
+        return explicitPitGeometry;
+    }
+
+    public Point GetCanvasPoint(double progress, double width, double height, double lateralOffset = 0)
+    {
+        var normalizedProgress = progress % 1.0;
+        if (normalizedProgress < 0)
+        {
+            normalizedProgress += 1.0;
+        }
+
+        var targetLength = normalizedProgress * _totalLength;
+        var traversed = 0.0;
+        var scale = GetScale(width, height);
+
+        for (var index = 0; index < _segmentLengths.Length; index++)
+        {
+            var nextTraversed = traversed + _segmentLengths[index];
+            if (targetLength <= nextTraversed)
+            {
+                var segmentProgress = _segmentLengths[index] == 0
+                    ? 0
+                    : (targetLength - traversed) / _segmentLengths[index];
+
+                var current = _trackPoints[index];
+                var next = _trackPoints[index + 1];
+                var point = new Point(
+                    current.X + ((next.X - current.X) * segmentProgress),
+                    current.Y + ((next.Y - current.Y) * segmentProgress));
+
+                var tangent = new Vector((next.X - current.X) * scale, (current.Y - next.Y) * scale);
+                if (tangent.Length > 0.001)
+                {
+                    tangent.Normalize();
+                }
+
+                var normal = new Vector(-tangent.Y, tangent.X);
+                var canvasPoint = MapToCanvas(point, width, height);
+                return new Point(
+                    canvasPoint.X + (normal.X * lateralOffset),
+                    canvasPoint.Y + (normal.Y * lateralOffset));
+            }
+
+            traversed = nextTraversed;
+        }
+
+        return MapToCanvas(_trackPoints[0], width, height);
+    }
+
+    public bool TryProjectRawPointToProgress(Point rawPoint, out double progress, out double distance)
+    {
+        var bestDistanceSquared = double.MaxValue;
+        var bestProgress = 0.0;
+        var traversed = 0.0;
+
+        for (var index = 0; index < _segmentLengths.Length; index++)
+        {
+            var start = _trackPoints[index];
+            var end = _trackPoints[index + 1];
+            var dx = end.X - start.X;
+            var dy = end.Y - start.Y;
+            var segmentLengthSquared = (dx * dx) + (dy * dy);
+
+            double t;
+            Point projection;
+            if (segmentLengthSquared <= 0.000001)
+            {
+                t = 0;
+                projection = start;
+            }
+            else
+            {
+                t = (((rawPoint.X - start.X) * dx) + ((rawPoint.Y - start.Y) * dy)) / segmentLengthSquared;
+                t = Math.Max(0, Math.Min(1, t));
+                projection = new Point(start.X + (dx * t), start.Y + (dy * t));
+            }
+
+            var distX = rawPoint.X - projection.X;
+            var distY = rawPoint.Y - projection.Y;
+            var distanceSquared = (distX * distX) + (distY * distY);
+            if (distanceSquared < bestDistanceSquared)
+            {
+                bestDistanceSquared = distanceSquared;
+                var segmentProgressDistance = _segmentLengths[index] * t;
+                bestProgress = _totalLength <= 0.001 ? 0 : (traversed + segmentProgressDistance) / _totalLength;
+            }
+
+            traversed += _segmentLengths[index];
+        }
+
+        progress = bestProgress;
+        distance = Math.Sqrt(bestDistanceSquared);
+        return bestDistanceSquared < double.MaxValue;
+    }
+
+    public Point MapMarkerPoint(Point rawPoint, double width, double height)
+        => MapToCanvas(rawPoint, width, height);
+
+    private double GetScale(double width, double height)
+    {
+        var drawableWidth = Math.Max(1, width - (CanvasPadding * 2));
+        var drawableHeight = Math.Max(1, height - (CanvasPadding * 2));
+        return Math.Min(drawableWidth / _rawWidth, drawableHeight / _rawHeight);
+    }
+
+    private Point MapToCanvas(Point rawPoint, double width, double height)
+    {
+        var drawableWidth = Math.Max(1, width - (CanvasPadding * 2));
+        var drawableHeight = Math.Max(1, height - (CanvasPadding * 2));
+        var scale = Math.Min(drawableWidth / _rawWidth, drawableHeight / _rawHeight);
+        var centeredOffsetX = CanvasPadding + ((drawableWidth - (_rawWidth * scale)) / 2.0);
+        var centeredOffsetY = CanvasPadding + ((drawableHeight - (_rawHeight * scale)) / 2.0);
+
+        var x = centeredOffsetX + ((rawPoint.X - _bounds.Left) * scale);
+        var y = centeredOffsetY + ((_bounds.Bottom - rawPoint.Y) * scale);
+        return new Point(x, y);
+    }
+
+    private static IReadOnlyList<Point> EnsureClosed(IReadOnlyList<Point> points)
+    {
+        if (points[0] == points[^1])
+        {
+            return points;
+        }
+
+        var closed = points.ToList();
+        closed.Add(points[0]);
+        return closed;
+    }
+}
+
+============================================================
+FILE: C:\codex\Formula 1\F1TrackMapper\Models\DriverModels.cs
+============================================================
+namespace F1TrackMapper.Models;
+
+public sealed record DriverDefinition(
+    string Code,
+    string FullName,
+    string TeamName,
+    string TeamBadge,
+    string TeamLogoPath,
+    string AccentHex,
+    double PaceBias,
+    int? DriverNumber = null);
+
+public sealed record DriverSnapshot(
+    DriverDefinition Driver,
+    int Position,
+    int CompletedLaps,
+    double Progress,
+    double SpeedKph,
+    double GapSeconds,
+    string GapLabel,
+    double LaneOffset);
+
+============================================================
+FILE: C:\codex\Formula 1\F1TrackMapper\Models\OpenF1Dtos.cs
+============================================================
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Windows;
+
+namespace F1TrackMapper.Models;
+
+public sealed class OpenF1MeetingDto
+{
+    [JsonPropertyName("meeting_key")]
+    public int MeetingKey { get; init; }
+
+    [JsonPropertyName("meeting_name")]
+    public string MeetingName { get; init; } = string.Empty;
+
+    [JsonPropertyName("meeting_official_name")]
+    public string MeetingOfficialName { get; init; } = string.Empty;
+
+    [JsonPropertyName("location")]
+    public string Location { get; init; } = string.Empty;
+
+    [JsonPropertyName("country_name")]
+    public string CountryName { get; init; } = string.Empty;
+
+    [JsonPropertyName("circuit_key")]
+    public int CircuitKey { get; init; }
+
+    [JsonPropertyName("circuit_short_name")]
+    public string CircuitShortName { get; init; } = string.Empty;
+
+    [JsonPropertyName("circuit_info_url")]
+    public string CircuitInfoUrl { get; init; } = string.Empty;
+
+    [JsonPropertyName("circuit_image")]
+    public string? CircuitImageUrl { get; init; }
+
+    [JsonPropertyName("date_start")]
+    public DateTimeOffset DateStart { get; init; }
+
+    [JsonPropertyName("date_end")]
+    public DateTimeOffset DateEnd { get; init; }
+
+    [JsonPropertyName("year")]
+    public int Year { get; init; }
+}
+
+public sealed class OpenF1SessionDto
+{
+    [JsonPropertyName("session_key")]
+    public int SessionKey { get; init; }
+
+    [JsonPropertyName("meeting_key")]
+    public int MeetingKey { get; init; }
+
+    [JsonPropertyName("session_name")]
+    public string SessionName { get; init; } = string.Empty;
+
+    [JsonPropertyName("session_type")]
+    public string SessionType { get; init; } = string.Empty;
+
+    [JsonPropertyName("date_start")]
+    public DateTimeOffset DateStart { get; init; }
+
+    [JsonPropertyName("date_end")]
+    public DateTimeOffset? DateEnd { get; init; }
+}
+
+public sealed class OpenF1DriverDto
+{
+    [JsonPropertyName("driver_number")]
+    public int DriverNumber { get; init; }
+
+    [JsonPropertyName("name_acronym")]
+    public string NameAcronym { get; init; } = string.Empty;
+
+    [JsonPropertyName("full_name")]
+    public string FullName { get; init; } = string.Empty;
+
+    [JsonPropertyName("team_name")]
+    public string TeamName { get; init; } = string.Empty;
+
+    [JsonPropertyName("team_colour")]
+    public string TeamColour { get; init; } = string.Empty;
+}
+
+public sealed class OpenF1LocationDto
+{
+    [JsonPropertyName("date")]
+    public DateTimeOffset Date { get; init; }
+
+    [JsonPropertyName("driver_number")]
+    public int DriverNumber { get; init; }
+
+    [JsonPropertyName("x")]
+    public double X { get; init; }
+
+    [JsonPropertyName("y")]
+    public double Y { get; init; }
+
+    [JsonPropertyName("z")]
+    public double Z { get; init; }
+
+    public Point ToPoint() => new(X, Y);
+}
+
+public sealed class OpenF1PositionDto
+{
+    [JsonPropertyName("date")]
+    public DateTimeOffset Date { get; init; }
+
+    [JsonPropertyName("driver_number")]
+    public int DriverNumber { get; init; }
+
+    [JsonPropertyName("position")]
+    public int Position { get; init; }
+}
+
+public sealed class OpenF1IntervalDto
+{
+    [JsonPropertyName("date")]
+    public DateTimeOffset Date { get; init; }
+
+    [JsonPropertyName("driver_number")]
+    public int DriverNumber { get; init; }
+
+    [JsonPropertyName("interval")]
+    public JsonElement Interval { get; init; }
+
+    [JsonPropertyName("gap_to_leader")]
+    public JsonElement GapToLeader { get; init; }
+}
+
+public sealed class OpenF1CarDataDto
+{
+    [JsonPropertyName("date")]
+    public DateTimeOffset Date { get; init; }
+
+    [JsonPropertyName("driver_number")]
+    public int DriverNumber { get; init; }
+
+    [JsonPropertyName("speed")]
+    public int? Speed { get; init; }
+}
+
+public sealed class MultiViewerCircuitInfoDto
+{
+    [JsonPropertyName("circuitKey")]
+    public int CircuitKey { get; init; }
+
+    [JsonPropertyName("circuitName")]
+    public string CircuitName { get; init; } = string.Empty;
+
+    [JsonPropertyName("location")]
+    public string Location { get; init; } = string.Empty;
+
+    [JsonPropertyName("rotation")]
+    public double Rotation { get; init; }
+
+    [JsonPropertyName("x")]
+    public List<double> X { get; init; } = new();
+
+    [JsonPropertyName("y")]
+    public List<double> Y { get; init; } = new();
+
+    [JsonPropertyName("corners")]
+    public List<MultiViewerMarkerDto> Corners { get; init; } = new();
+
+    [JsonPropertyName("marshalSectors")]
+    public List<MultiViewerMarkerDto> MarshalSectors { get; init; } = new();
+
+    [JsonPropertyName("candidateLap")]
+    public CandidateLapDto? CandidateLap { get; init; }
+}
+
+public sealed class MultiViewerMarkerDto
+{
+    [JsonPropertyName("number")]
+    public int Number { get; init; }
+
+    [JsonPropertyName("angle")]
+    public double Angle { get; init; }
+
+    [JsonPropertyName("trackPosition")]
+    public MultiViewerTrackPointDto TrackPosition { get; init; } = new();
+}
+
+public sealed class MultiViewerTrackPointDto
+{
+    [JsonPropertyName("x")]
+    public double X { get; init; }
+
+    [JsonPropertyName("y")]
+    public double Y { get; init; }
+
+    public Point ToPoint() => new(X, Y);
+}
+
+public sealed class CandidateLapDto
+{
+    [JsonPropertyName("lapTime")]
+    public double? LapTime { get; init; }
+}
+
+public sealed class GeoJsonFeatureCollectionDto
+{
+    [JsonPropertyName("features")]
+    public List<GeoJsonCircuitFeatureDto> Features { get; init; } = new();
+}
+
+public sealed class GeoJsonCircuitFeatureDto
+{
+    [JsonPropertyName("properties")]
+    public GeoJsonCircuitPropertiesDto Properties { get; init; } = new();
+
+    [JsonPropertyName("geometry")]
+    public GeoJsonGeometryDto Geometry { get; init; } = new();
+}
+
+public sealed class GeoJsonCircuitPropertiesDto
+{
+    [JsonPropertyName("id")]
+    public string Id { get; init; } = string.Empty;
+
+    [JsonPropertyName("Location")]
+    public string Location { get; init; } = string.Empty;
+
+    [JsonPropertyName("Name")]
+    public string Name { get; init; } = string.Empty;
+
+    [JsonPropertyName("length")]
+    public double? LengthMeters { get; init; }
+}
+
+public sealed class GeoJsonGeometryDto
+{
+    [JsonPropertyName("type")]
+    public string Type { get; init; } = string.Empty;
+
+    [JsonPropertyName("coordinates")]
+    public List<List<double>> Coordinates { get; init; } = new();
+
+    public IReadOnlyList<Point> ToPoints()
+        => Coordinates
+            .Where(pair => pair.Count >= 2)
+            .Select(pair => new Point(pair[0], pair[1]))
+            .ToList();
+}
+
+============================================================
+FILE: C:\codex\Formula 1\F1TrackMapper\Models\TrackMarker.cs
+============================================================
+using System.Windows;
+
+namespace F1TrackMapper.Models;
+
+public enum MarkerKind
+{
+    Turn,
+    Sector,
+    Pit
+}
+
+public sealed record TrackMarker(
+    string Title,
+    string Subtitle,
+    Point TrackPoint,
+    double Angle,
+    MarkerKind Kind);
+
+============================================================
+FILE: C:\codex\Formula 1\F1TrackMapper\Services\ActualCircuitBuilder.cs
+============================================================
+using System.Windows;
+using F1TrackMapper.Models;
+
+namespace F1TrackMapper.Services;
+
+public static class ActualCircuitBuilder
+{
+    private const double ReferenceCanvasWidth = 960;
+    private const double ReferenceCanvasHeight = 620;
+    private const double CanvasPadding = 28;
+
+    private static readonly string[] AdaptiveRotationCircuits =
+    {
+        "Saudi Arabian Grand Prix",
+        "Canadian Grand Prix",
+        "Monaco Grand Prix",
+        "British Grand Prix",
+        "Belgian Grand Prix",
+        "Hungarian Grand Prix",
+        "Qatar Grand Prix",
+        "Abu Dhabi Grand Prix"
+    };
+
+    public static CircuitDefinition Build(CalendarEntry weekend, MultiViewerCircuitInfoDto? circuitInfo, GeoJsonCircuitFeatureDto? geoCircuit)
+    {
+        var useMultiViewerLayout = circuitInfo is not null && circuitInfo.X.Count >= 3 && circuitInfo.Y.Count >= 3;
+        var useGeoJsonLayout = !useMultiViewerLayout && geoCircuit is not null && geoCircuit.Geometry.ToPoints().Count >= 3;
+
+        var trackPoints = useMultiViewerLayout
+            ? BuildMultiViewerPoints(circuitInfo)
+            : useGeoJsonLayout
+                ? geoCircuit!.Geometry.ToPoints().ToList()
+                : new List<Point>();
+
+        var title = !string.IsNullOrWhiteSpace(circuitInfo?.CircuitName)
+            ? circuitInfo!.CircuitName
+            : !string.IsNullOrWhiteSpace(geoCircuit?.Properties.Name)
+                ? geoCircuit!.Properties.Name
+                : weekend.CircuitShortName;
+
+        var markers = new List<TrackMarker>();
+        IReadOnlyList<Point>? pitLanePoints = null;
+
+        if (useMultiViewerLayout && circuitInfo is not null)
+        {
+            markers.AddRange(circuitInfo.Corners.Select(corner => new TrackMarker(
+                $"T{corner.Number}",
+                $"Turn {corner.Number}",
+                corner.TrackPosition.ToPoint(),
+                corner.Angle,
+                MarkerKind.Turn)));
+
+            markers.AddRange(circuitInfo.MarshalSectors.Select(sector => new TrackMarker(
+                $"M{sector.Number}",
+                string.Empty,
+                sector.TrackPosition.ToPoint(),
+                sector.Angle,
+                MarkerKind.Sector)));
+
+            pitLanePoints = BuildPitLanePoints(trackPoints, circuitInfo.Corners, weekend, title);
+        }
+
+        if (pitLanePoints is not null && pitLanePoints.Count >= 2)
+        {
+            var pitMarkerPoint = pitLanePoints[Math.Min(1, pitLanePoints.Count - 1)];
+            markers.Add(new TrackMarker(
+                "PIT",
+                "Pit entry / lane",
+                pitMarkerPoint,
+                0,
+                MarkerKind.Pit));
+        }
+
+        (trackPoints, pitLanePoints, markers) = NormalizeOrientation(weekend, title, trackPoints, pitLanePoints, markers);
+
+        var lapTime = circuitInfo?.CandidateLap?.LapTime ?? 90.0;
+        var summary = useMultiViewerLayout
+            ? "Track layout comes from the live circuit metadata feed for the selected weekend."
+            : "Track layout comes from the bacinger/f1-circuits GeoJSON fallback dataset.";
+
+        return new CircuitDefinition(
+            weekend.CircuitKey.ToString(),
+            title,
+            $"{weekend.Location}, {weekend.CountryName}",
+            summary,
+            useGeoJsonLayout ? "#FF5449" : "#E10600",
+            lapTime,
+            220.0,
+            trackPoints,
+            markers,
+            pitLanePoints);
+    }
+
+    private static (List<Point> TrackPoints, IReadOnlyList<Point>? PitLanePoints, List<TrackMarker> Markers) NormalizeOrientation(
+        CalendarEntry weekend,
+        string title,
+        List<Point> trackPoints,
+        IReadOnlyList<Point>? pitLanePoints,
+        List<TrackMarker> markers)
+    {
+        if (trackPoints.Count < 3)
+        {
+            return (trackPoints, pitLanePoints, markers);
+        }
+
+        var rotation = GetRotationOverride(weekend, title, trackPoints);
+        if (Math.Abs(rotation) < 0.01)
+        {
+            return (trackPoints, pitLanePoints, markers);
+        }
+
+        var bounds = GetBounds(trackPoints, pitLanePoints, markers);
+        var center = new Point(bounds.Left + (bounds.Width / 2.0), bounds.Top + (bounds.Height / 2.0));
+
+        var rotatedTrack = trackPoints.Select(point => Rotate(point, center, rotation)).ToList();
+        var rotatedPit = pitLanePoints?.Select(point => Rotate(point, center, rotation)).ToList();
+        var rotatedMarkers = markers
+            .Select(marker => marker with
+            {
+                TrackPoint = Rotate(marker.TrackPoint, center, rotation),
+                Angle = marker.Angle - rotation
+            })
+            .ToList();
+
+        return (rotatedTrack, rotatedPit, rotatedMarkers);
+    }
+
+    private static IReadOnlyList<Point>? BuildPitLanePoints(IReadOnlyList<Point> trackPoints, IReadOnlyList<MultiViewerMarkerDto> corners, CalendarEntry weekend, string title)
+    {
+        if (trackPoints.Count < 6 || corners.Count < 2)
+        {
+            return null;
+        }
+
+        var orderedCorners = corners
+            .Where(corner => corner.Number > 0)
+            .OrderBy(corner => corner.Number)
+            .ToList();
+
+        if (orderedCorners.Count < 2)
+        {
+            return null;
+        }
+
+        if (Matches(weekend.GrandPrixName, "Canadian") || Matches(title, "Montreal") || Matches(weekend.Location, "Montreal"))
+        {
+            var canadianPit = BuildCanadianPitLanePoints(trackPoints, orderedCorners);
+            if (canadianPit is not null)
+            {
+                return canadianPit;
+            }
+        }
+
+        var firstCorner = orderedCorners.First();
+        var lastCorner = orderedCorners.Last();
+        var firstCornerIndex = FindClosestTrackIndex(trackPoints, firstCorner.TrackPosition.ToPoint());
+        var lastCornerIndex = FindClosestTrackIndex(trackPoints, lastCorner.TrackPosition.ToPoint());
+        var startFinishPath = GetShorterPath(trackPoints, lastCornerIndex, firstCornerIndex);
+        var trimmedPath = TrimPath(startFinishPath);
+
+        if (trimmedPath.Count < 2)
+        {
+            return null;
+        }
+
+        var scale = GetReferenceScale(trackPoints);
+        if (scale <= 0.001)
+        {
+            return null;
+        }
+
+        var rawOffset = 24.0 / scale;
+        var center = GetTrackCenter(trackPoints);
+        var sideSign = DeterminePitSide(trimmedPath, center, rawOffset);
+        return OffsetPath(trimmedPath, rawOffset, sideSign);
+    }
+
+    private static IReadOnlyList<Point>? BuildCanadianPitLanePoints(IReadOnlyList<Point> trackPoints, IReadOnlyList<MultiViewerMarkerDto> orderedCorners)
+    {
+        var corner13 = orderedCorners.FirstOrDefault(corner => corner.Number == 13);
+        var corner14 = orderedCorners.FirstOrDefault(corner => corner.Number == 14);
+        var corner1 = orderedCorners.FirstOrDefault(corner => corner.Number == 1);
+        var corner2 = orderedCorners.FirstOrDefault(corner => corner.Number == 2);
+
+        if (corner13 is null || corner14 is null || corner1 is null || corner2 is null)
+        {
+            return null;
+        }
+
+        var index13 = FindClosestTrackIndex(trackPoints, corner13.TrackPosition.ToPoint());
+        var index14 = FindClosestTrackIndex(trackPoints, corner14.TrackPosition.ToPoint());
+        var index1 = FindClosestTrackIndex(trackPoints, corner1.TrackPosition.ToPoint());
+        var index2 = FindClosestTrackIndex(trackPoints, corner2.TrackPosition.ToPoint());
+
+        var path13To14 = GetShorterPath(trackPoints, index13, index14).ToList();
+        var path14To1 = GetShorterPath(trackPoints, index14, index1).ToList();
+        var path1To2 = GetShorterPath(trackPoints, index1, index2).ToList();
+        var combinedPath = ConcatenatePaths(path13To14, path14To1, path1To2);
+        var trimmedPath = TrimPathWithRatios(combinedPath, 0.10, 0.22);
+        if (trimmedPath.Count < 2)
+        {
+            return null;
+        }
+
+        var scale = GetReferenceScale(trackPoints);
+        if (scale <= 0.001)
+        {
+            return null;
+        }
+
+        var rawOffset = 18.0 / scale;
+        var center = GetTrackCenter(trackPoints);
+        var sideSign = DeterminePitSide(trimmedPath, center, rawOffset);
+        return OffsetPath(trimmedPath, rawOffset, sideSign);
+    }
+
+    private static IReadOnlyList<Point> ConcatenatePaths(params List<Point>[] segments)
+    {
+        var combined = new List<Point>();
+        foreach (var segment in segments)
+        {
+            if (segment.Count == 0)
+            {
+                continue;
+            }
+
+            if (combined.Count == 0)
+            {
+                combined.AddRange(segment);
+            }
+            else
+            {
+                combined.AddRange(segment.Skip(1));
+            }
+        }
+
+        return combined;
+    }
+
+    private static IReadOnlyList<Point> TrimPathWithRatios(IReadOnlyList<Point> path, double startRatio, double endRatio)
+    {
+        if (path.Count < 5)
+        {
+            return path.ToList();
+        }
+
+        var skipStart = Math.Max(1, (int)Math.Round(path.Count * startRatio));
+        var skipEnd = Math.Max(1, (int)Math.Round(path.Count * endRatio));
+        var takeCount = path.Count - skipStart - skipEnd;
+        if (takeCount < 2)
+        {
+            return path.ToList();
+        }
+
+        return path.Skip(skipStart).Take(takeCount).ToList();
+    }
+
+    private static int DeterminePitSide(IReadOnlyList<Point> path, Point center, double rawOffset)
+    {
+        var midIndex = path.Count / 2;
+        var tangent = GetPathTangent(path, midIndex);
+        if (tangent.Length <= 0.001)
+        {
+            return 1;
+        }
+
+        tangent.Normalize();
+        var normal = new Vector(-tangent.Y, tangent.X);
+        var candidateA = path[midIndex] + (normal * rawOffset);
+        var candidateB = path[midIndex] - (normal * rawOffset);
+
+        return DistanceSquared(candidateA, center) <= DistanceSquared(candidateB, center) ? 1 : -1;
+    }
+
+    private static IReadOnlyList<Point> OffsetPath(IReadOnlyList<Point> path, double rawOffset, int sideSign)
+    {
+        var points = new List<Point>(path.Count);
+        for (var index = 0; index < path.Count; index++)
+        {
+            var tangent = GetPathTangent(path, index);
+            if (tangent.Length <= 0.001)
+            {
+                points.Add(path[index]);
+                continue;
+            }
+
+            tangent.Normalize();
+            var normal = new Vector(-tangent.Y, tangent.X) * sideSign;
+            points.Add(path[index] + (normal * rawOffset));
+        }
+
+        return points;
+    }
+
+    private static Vector GetPathTangent(IReadOnlyList<Point> path, int index)
+    {
+        var previous = index == 0 ? path[index] : path[index - 1];
+        var next = index == path.Count - 1 ? path[index] : path[index + 1];
+        return new Vector(next.X - previous.X, next.Y - previous.Y);
+    }
+
+    private static IReadOnlyList<Point> TrimPath(IReadOnlyList<Point> path)
+    {
+        if (path.Count < 5)
+        {
+            return path.ToList();
+        }
+
+        var skipStart = Math.Max(1, (int)Math.Round(path.Count * 0.12));
+        var skipEnd = Math.Max(1, (int)Math.Round(path.Count * 0.15));
+        var takeCount = path.Count - skipStart - skipEnd;
+
+        if (takeCount < 2)
+        {
+            return path.ToList();
+        }
+
+        return path.Skip(skipStart).Take(takeCount).ToList();
+    }
+
+    private static IReadOnlyList<Point> GetShorterPath(IReadOnlyList<Point> trackPoints, int startIndex, int endIndex)
+    {
+        var forward = TraversePath(trackPoints, startIndex, endIndex, 1);
+        var backward = TraversePath(trackPoints, startIndex, endIndex, -1);
+        return GetPathLength(forward) <= GetPathLength(backward) ? forward : backward;
+    }
+
+    private static List<Point> TraversePath(IReadOnlyList<Point> trackPoints, int startIndex, int endIndex, int direction)
+    {
+        var count = trackPoints.Count;
+        var path = new List<Point>();
+        var index = startIndex;
+
+        while (true)
+        {
+            path.Add(trackPoints[index]);
+            if (index == endIndex)
+            {
+                break;
+            }
+
+            index = (index + direction + count) % count;
+        }
+
+        return path;
+    }
+
+    private static double GetPathLength(IReadOnlyList<Point> points)
+    {
+        var length = 0.0;
+        for (var index = 0; index < points.Count - 1; index++)
+        {
+            var dx = points[index + 1].X - points[index].X;
+            var dy = points[index + 1].Y - points[index].Y;
+            length += Math.Sqrt((dx * dx) + (dy * dy));
+        }
+
+        return length;
+    }
+
+    private static int FindClosestTrackIndex(IReadOnlyList<Point> trackPoints, Point target)
+    {
+        var closestIndex = 0;
+        var closestDistance = double.MaxValue;
+
+        for (var index = 0; index < trackPoints.Count; index++)
+        {
+            var distance = DistanceSquared(trackPoints[index], target);
+            if (distance >= closestDistance)
+            {
+                continue;
+            }
+
+            closestDistance = distance;
+            closestIndex = index;
+        }
+
+        return closestIndex;
+    }
+
+    private static double GetReferenceScale(IReadOnlyList<Point> trackPoints)
+    {
+        var bounds = GetBounds(trackPoints, null, Array.Empty<TrackMarker>());
+        var rawWidth = Math.Max(1, bounds.Width);
+        var rawHeight = Math.Max(1, bounds.Height);
+        var drawableWidth = Math.Max(1, ReferenceCanvasWidth - (CanvasPadding * 2));
+        var drawableHeight = Math.Max(1, ReferenceCanvasHeight - (CanvasPadding * 2));
+        return Math.Min(drawableWidth / rawWidth, drawableHeight / rawHeight);
+    }
+
+    private static double GetRotationOverride(CalendarEntry weekend, string title, IReadOnlyList<Point> trackPoints)
+    {
+        if (Matches(weekend.GrandPrixName, "Las Vegas") || Matches(title, "Las Vegas") || Matches(weekend.Location, "Las Vegas"))
+        {
+            return 90;
+        }
+
+        if (!AdaptiveRotationCircuits.Any(name => Matches(weekend.GrandPrixName, name) || Matches(title, name)))
+        {
+            return 0;
+        }
+
+        var currentScore = GetFitScore(trackPoints);
+        var rotatedScore = GetFitScore(trackPoints.Select(point => Rotate(point, GetTrackCenter(trackPoints), 90)).ToList());
+        return rotatedScore > currentScore * 1.07 ? 90 : 0;
+    }
+
+    private static double GetFitScore(IReadOnlyList<Point> points)
+    {
+        var bounds = GetBounds(points, null, Array.Empty<TrackMarker>());
+        var width = Math.Max(1, bounds.Width);
+        var height = Math.Max(1, bounds.Height);
+        var scale = Math.Min((ReferenceCanvasWidth - 56.0) / width, (ReferenceCanvasHeight - 56.0) / height);
+        return scale * width * height;
+    }
+
+    private static Point GetTrackCenter(IReadOnlyList<Point> points)
+    {
+        var bounds = GetBounds(points, null, Array.Empty<TrackMarker>());
+        return new Point(bounds.Left + (bounds.Width / 2.0), bounds.Top + (bounds.Height / 2.0));
+    }
+
+    private static Rect GetBounds(IReadOnlyList<Point> points, IReadOnlyList<Point>? pitLanePoints, IReadOnlyList<TrackMarker> markers)
+    {
+        var minX = points.Min(point => point.X);
+        var maxX = points.Max(point => point.X);
+        var minY = points.Min(point => point.Y);
+        var maxY = points.Max(point => point.Y);
+
+        if (pitLanePoints is not null && pitLanePoints.Count > 0)
+        {
+            minX = Math.Min(minX, pitLanePoints.Min(point => point.X));
+            maxX = Math.Max(maxX, pitLanePoints.Max(point => point.X));
+            minY = Math.Min(minY, pitLanePoints.Min(point => point.Y));
+            maxY = Math.Max(maxY, pitLanePoints.Max(point => point.Y));
+        }
+
+        if (markers.Count > 0)
+        {
+            minX = Math.Min(minX, markers.Min(marker => marker.TrackPoint.X));
+            maxX = Math.Max(maxX, markers.Max(marker => marker.TrackPoint.X));
+            minY = Math.Min(minY, markers.Min(marker => marker.TrackPoint.Y));
+            maxY = Math.Max(maxY, markers.Max(marker => marker.TrackPoint.Y));
+        }
+
+        return new Rect(new Point(minX, minY), new Point(maxX, maxY));
+    }
+
+    private static Point Rotate(Point point, Point center, double angleDegrees)
+    {
+        var radians = angleDegrees * Math.PI / 180.0;
+        var translatedX = point.X - center.X;
+        var translatedY = point.Y - center.Y;
+
+        var rotatedX = (translatedX * Math.Cos(radians)) - (translatedY * Math.Sin(radians));
+        var rotatedY = (translatedX * Math.Sin(radians)) + (translatedY * Math.Cos(radians));
+
+        return new Point(center.X + rotatedX, center.Y + rotatedY);
+    }
+
+    private static double DistanceSquared(Point left, Point right)
+    {
+        var dx = left.X - right.X;
+        var dy = left.Y - right.Y;
+        return (dx * dx) + (dy * dy);
+    }
+
+    private static bool Matches(string left, string right)
+        => left.Contains(right, StringComparison.OrdinalIgnoreCase) || right.Contains(left, StringComparison.OrdinalIgnoreCase);
+
+    private static List<Point> BuildMultiViewerPoints(MultiViewerCircuitInfoDto? circuitInfo)
+    {
+        if (circuitInfo is null)
+        {
+            return new List<Point>();
+        }
+
+        var points = new List<Point>(Math.Min(circuitInfo.X.Count, circuitInfo.Y.Count));
+        for (var index = 0; index < Math.Min(circuitInfo.X.Count, circuitInfo.Y.Count); index++)
+        {
+            points.Add(new Point(circuitInfo.X[index], circuitInfo.Y[index]));
+        }
+
+        return points;
+    }
+}
+
+
+============================================================
+FILE: C:\codex\Formula 1\F1TrackMapper\Services\CircuitCatalog.cs
+============================================================
+using F1TrackMapper.Models;
+
+namespace F1TrackMapper.Services;
+
+public static class CircuitCatalog
+{
+    private static readonly Dictionary<string, TeamStyle> TeamStyles = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ["Mercedes"] = new("MER", "mercedes", "#27F4D2"),
+        ["Scuderia Ferrari"] = new("FER", "ferrari", "#D5002A"),
+        ["Ferrari"] = new("FER", "ferrari", "#D5002A"),
+        ["McLaren"] = new("MCL", "mclaren", "#ED7700"),
+        ["McLaren Formula 1 Team"] = new("MCL", "mclaren", "#ED7700"),
+        ["Oracle Red Bull Racing"] = new("RBR", "redbullracing", "#21477C"),
+        ["Red Bull Racing"] = new("RBR", "redbullracing", "#21477C"),
+        ["Racing Bulls"] = new("RB", "racingbulls", "#4070E8"),
+        ["Visa Cash App RB"] = new("RB", "racingbulls", "#4070E8"),
+        ["Visa Cash App Racing Bulls F1 Team"] = new("RB", "racingbulls", "#4070E8"),
+        ["Audi"] = new("AUD", "audi", "#CC2400"),
+        ["Sauber"] = new("AUD", "audi", "#CC2400"),
+        ["Stake F1 Team Kick Sauber"] = new("AUD", "audi", "#CC2400"),
+        ["Williams"] = new("WIL", "williams", "#124A9A"),
+        ["Williams Racing"] = new("WIL", "williams", "#124A9A"),
+        ["Cadillac"] = new("CAD", "cadillac", "#767679"),
+        ["Haas F1 Team"] = new("HAS", "haas", "#9BA2A4"),
+        ["MoneyGram Haas F1 Team"] = new("HAS", "haas", "#9BA2A4"),
+        ["Aston Martin"] = new("AMR", "astonmartin", "#18684D"),
+        ["Aston Martin Aramco Formula One Team"] = new("AMR", "astonmartin", "#18684D"),
+        ["Alpine"] = new("ALP", "alpine", "#007CB2"),
+        ["BWT Alpine F1 Team"] = new("ALP", "alpine", "#007CB2")
+    };
+
+    public static IReadOnlyList<DriverDefinition> CreateOfficial2026Grid()
+        => new List<DriverDefinition>
+        {
+            new("RUS", "George Russell", "Mercedes", "MER", TeamLogo("mercedes"), "#27F4D2", 1.00),
+            new("ANT", "Kimi Antonelli", "Mercedes", "MER", TeamLogo("mercedes"), "#27F4D2", 0.99),
+            new("LEC", "Charles Leclerc", "Ferrari", "FER", TeamLogo("ferrari"), "#D5002A", 1.00),
+            new("HAM", "Lewis Hamilton", "Ferrari", "FER", TeamLogo("ferrari"), "#D5002A", 0.99),
+            new("NOR", "Lando Norris", "McLaren", "MCL", TeamLogo("mclaren"), "#ED7700", 1.00),
+            new("PIA", "Oscar Piastri", "McLaren", "MCL", TeamLogo("mclaren"), "#ED7700", 1.00),
+            new("VER", "Max Verstappen", "Red Bull Racing", "RBR", TeamLogo("redbullracing"), "#21477C", 1.01),
+            new("HAD", "Isack Hadjar", "Red Bull Racing", "RBR", TeamLogo("redbullracing"), "#21477C", 0.97),
+            new("GAS", "Pierre Gasly", "Alpine", "ALP", TeamLogo("alpine"), "#007CB2", 0.95),
+            new("COL", "Franco Colapinto", "Alpine", "ALP", TeamLogo("alpine"), "#007CB2", 0.94),
+            new("OCO", "Esteban Ocon", "Haas F1 Team", "HAS", TeamLogo("haas"), "#9BA2A4", 0.93),
+            new("BEA", "Oliver Bearman", "Haas F1 Team", "HAS", TeamLogo("haas"), "#9BA2A4", 0.92),
+            new("LAW", "Liam Lawson", "Racing Bulls", "RB", TeamLogo("racingbulls"), "#4070E8", 0.93),
+            new("LIN", "Arvid Lindblad", "Racing Bulls", "RB", TeamLogo("racingbulls"), "#4070E8", 0.92),
+            new("HUL", "Nico Hulkenberg", "Audi", "AUD", TeamLogo("audi"), "#CC2400", 0.94),
+            new("BOR", "Gabriel Bortoleto", "Audi", "AUD", TeamLogo("audi"), "#CC2400", 0.92),
+            new("SAI", "Carlos Sainz", "Williams", "WIL", TeamLogo("williams"), "#124A9A", 0.93),
+            new("ALB", "Alexander Albon", "Williams", "WIL", TeamLogo("williams"), "#124A9A", 0.92),
+            new("PER", "Sergio Perez", "Cadillac", "CAD", TeamLogo("cadillac"), "#767679", 0.91),
+            new("BOT", "Valtteri Bottas", "Cadillac", "CAD", TeamLogo("cadillac"), "#767679", 0.90),
+            new("ALO", "Fernando Alonso", "Aston Martin", "AMR", TeamLogo("astonmartin"), "#18684D", 0.94),
+            new("STR", "Lance Stroll", "Aston Martin", "AMR", TeamLogo("astonmartin"), "#18684D", 0.91),
+        };
+
+    public static IReadOnlyList<DriverDefinition> CreateLiveGrid(IReadOnlyList<OpenF1DriverDto> liveDrivers)
+        => liveDrivers
+            .OrderBy(driver => driver.DriverNumber)
+            .Select(CreateLiveDriver)
+            .ToList();
+
+    public static DriverDefinition CreateLiveDriver(OpenF1DriverDto liveDriver)
+    {
+        var style = ResolveTeamStyle(liveDriver.TeamName, liveDriver.TeamColour);
+        var code = string.IsNullOrWhiteSpace(liveDriver.NameAcronym)
+            ? BuildFallbackCode(liveDriver.FullName)
+            : liveDriver.NameAcronym.Trim().ToUpperInvariant();
+
+        return new DriverDefinition(
+            code,
+            ToTitleCaseName(liveDriver.FullName),
+            string.IsNullOrWhiteSpace(liveDriver.TeamName) ? "Unknown Team" : liveDriver.TeamName.Trim(),
+            style.Badge,
+            TeamLogo(style.LogoFile),
+            style.AccentHex,
+            1.0,
+            liveDriver.DriverNumber);
+    }
+
+    private static TeamStyle ResolveTeamStyle(string? teamName, string? teamColour)
+    {
+        if (!string.IsNullOrWhiteSpace(teamName))
+        {
+            foreach (var pair in TeamStyles)
+            {
+                if (teamName.Contains(pair.Key, StringComparison.OrdinalIgnoreCase) || pair.Key.Contains(teamName, StringComparison.OrdinalIgnoreCase))
+                {
+                    return pair.Value with { AccentHex = NormalizeHex(teamColour, pair.Value.AccentHex) };
+                }
+            }
+        }
+
+        return new TeamStyle("F1", "haas", NormalizeHex(teamColour, "#E10600"));
+    }
+
+    private static string NormalizeHex(string? candidate, string fallback)
+    {
+        if (string.IsNullOrWhiteSpace(candidate))
+        {
+            return fallback;
+        }
+
+        var trimmed = candidate.Trim();
+        if (trimmed.StartsWith("#", StringComparison.Ordinal))
+        {
+            return trimmed;
+        }
+
+        return trimmed.Length == 6 ? $"#{trimmed}" : fallback;
+    }
+
+    private static string ToTitleCaseName(string fullName)
+    {
+        if (string.IsNullOrWhiteSpace(fullName))
+        {
+            return "Unknown Driver";
+        }
+
+        return string.Join(' ', fullName
+            .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+            .Select(part => char.ToUpperInvariant(part[0]) + part[1..].ToLowerInvariant()));
+    }
+
+    private static string BuildFallbackCode(string fullName)
+    {
+        var parts = fullName.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        if (parts.Length == 0)
+        {
+            return "DRV";
+        }
+
+        var source = parts[^1];
+        return source.Length >= 3
+            ? source[..3].ToUpperInvariant()
+            : source.ToUpperInvariant().PadRight(3, 'X');
+    }
+
+    private static string TeamLogo(string fileName)
+        => $"pack://application:,,,/Assets/Teams/{fileName}.png";
+
+    private sealed record TeamStyle(string Badge, string LogoFile, string AccentHex);
+}
+
+============================================================
+FILE: C:\codex\Formula 1\F1TrackMapper\Services\MockLiveTimingService.cs
+============================================================
+using System.Windows.Threading;
+using F1TrackMapper.Models;
+
+namespace F1TrackMapper.Services;
+
+public sealed class MockLiveTimingService : IDisposable
+{
+    private readonly DispatcherTimer _timer;
+    private readonly Random _random = new();
+    private readonly List<LiveDriverState> _states = new();
+    private CircuitDefinition? _circuit;
+
+    public MockLiveTimingService()
+    {
+        _timer = new DispatcherTimer
+        {
+            Interval = TimeSpan.FromMilliseconds(260)
+        };
+        _timer.Tick += OnTick;
+    }
+
+    public event EventHandler<IReadOnlyList<DriverSnapshot>>? TelemetryUpdated;
+
+    public void LoadGrid(IReadOnlyList<DriverDefinition> drivers)
+    {
+        _states.Clear();
+        for (var index = 0; index < drivers.Count; index++)
+        {
+            _states.Add(new LiveDriverState(
+                drivers[index],
+                16 + _random.Next(2, 8),
+                _random.NextDouble(),
+                _random.NextDouble() * 0.92,
+                -26 + (_random.NextDouble() * 52)));
+        }
+
+        ApplyDemoStartingOrder();
+    }
+
+    public void SetCircuit(CircuitDefinition circuit)
+    {
+        _circuit = circuit;
+    }
+
+    public void Start()
+    {
+        if (!_timer.IsEnabled)
+        {
+            _timer.Start();
+        }
+    }
+
+    public void Stop()
+    {
+        if (_timer.IsEnabled)
+        {
+            _timer.Stop();
+        }
+    }
+
+    public void Dispose()
+    {
+        Stop();
+        _timer.Tick -= OnTick;
+    }
+
+    private void OnTick(object? sender, EventArgs e)
+    {
+        if (_circuit is null || _states.Count == 0)
+        {
+            return;
+        }
+
+        foreach (var state in _states)
+        {
+            var paceDelta = 0.00245 + (state.Driver.PaceBias * 0.00028) + (_random.NextDouble() * 0.00040);
+            state.Progress += paceDelta;
+
+            if (state.Progress >= 1.0)
+            {
+                state.Progress -= 1.0;
+                state.CompletedLaps++;
+            }
+
+            state.SpeedKph = _circuit.AverageSpeedKph * (0.972 + (_random.NextDouble() * 0.038));
+        }
+
+        var ordered = _states
+            .OrderByDescending(state => state.CompletedLaps + state.Progress)
+            .ToList();
+
+        var leaderDistance = ordered[0].CompletedLaps + ordered[0].Progress;
+        var snapshots = new List<DriverSnapshot>(ordered.Count);
+
+        for (var index = 0; index < ordered.Count; index++)
+        {
+            var state = ordered[index];
+            var gapSeconds = (leaderDistance - (state.CompletedLaps + state.Progress)) * _circuit.ReferenceLapSeconds;
+            snapshots.Add(new DriverSnapshot(
+                state.Driver,
+                index + 1,
+                state.CompletedLaps,
+                state.Progress,
+                state.SpeedKph,
+                Math.Max(0, gapSeconds),
+                index == 0 ? "Leader" : $"+{Math.Max(0, gapSeconds):0.0}s",
+                state.LaneOffset));
+        }
+
+        TelemetryUpdated?.Invoke(this, snapshots);
+    }
+
+    private void ApplyDemoStartingOrder()
+    {
+        var preferredOrder = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase)
+        {
+            ["VER"] = 0,
+            ["LEC"] = 1,
+            ["ANT"] = 2,
+            ["NOR"] = 3
+        };
+
+        const int baseLaps = 25;
+        const double leadProgress = 0.965;
+
+        foreach (var state in _states)
+        {
+            if (preferredOrder.TryGetValue(state.Driver.Code, out var rank))
+            {
+                state.CompletedLaps = baseLaps;
+                state.Progress = Math.Max(0.01, leadProgress - (rank * 0.015));
+            }
+            else
+            {
+                state.CompletedLaps = baseLaps - 1;
+                state.Progress = 0.10 + (_random.NextDouble() * 0.75);
+            }
+        }
+    }
+
+    private sealed class LiveDriverState
+    {
+        public LiveDriverState(DriverDefinition driver, int completedLaps, double progress, double speedKph, double laneOffset)
+        {
+            Driver = driver;
+            CompletedLaps = completedLaps;
+            Progress = progress;
+            SpeedKph = speedKph;
+            LaneOffset = laneOffset;
+        }
+
+        public DriverDefinition Driver { get; }
+        public int CompletedLaps { get; set; }
+        public double Progress { get; set; }
+        public double SpeedKph { get; set; }
+        public double LaneOffset { get; }
+    }
+}
+
+============================================================
+FILE: C:\codex\Formula 1\F1TrackMapper\Services\OpenF1ApiClient.cs
+============================================================
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Text.Json;
+using F1TrackMapper.Models;
+
+namespace F1TrackMapper.Services;
+
+public sealed class OpenF1ApiClient : IDisposable
+{
+    private const string CircuitsGeoJsonUrl = "https://raw.githubusercontent.com/bacinger/f1-circuits/master/f1-circuits.geojson";
+
+    private static readonly JsonSerializerOptions JsonOptions = new()
+    {
+        PropertyNameCaseInsensitive = true
+    };
+
+    private readonly HttpClient _openF1Client = new()
+    {
+        BaseAddress = new Uri("https://api.openf1.org/v1/")
+    };
+
+    private readonly HttpClient _multiViewerClient = new();
+    private IReadOnlyList<GeoJsonCircuitFeatureDto>? _cachedGeoCircuits;
+
+    public async Task<IReadOnlyList<CalendarEntry>> GetRaceCalendarAsync(int year, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var response = await _openF1Client.GetAsync($"meetings?year={year}", cancellationToken);
+            response.EnsureSuccessStatusCode();
+
+            await using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
+            var meetings = await JsonSerializer.DeserializeAsync<List<OpenF1MeetingDto>>(stream, JsonOptions, cancellationToken)
+                ?? new List<OpenF1MeetingDto>();
+
+            var raceMeetings = meetings
+                .Where(meeting => meeting.MeetingOfficialName.Contains("GRAND PRIX", StringComparison.OrdinalIgnoreCase))
+                .OrderBy(meeting => meeting.DateStart)
+                .ToList();
+
+            var calendar = new List<CalendarEntry>(raceMeetings.Count);
+            for (var index = 0; index < raceMeetings.Count; index++)
+            {
+                var meeting = raceMeetings[index];
+                calendar.Add(new CalendarEntry(
+                    index + 1,
+                    meeting.MeetingKey,
+                    meeting.CircuitKey,
+                    meeting.MeetingName,
+                    meeting.MeetingOfficialName,
+                    meeting.CircuitShortName,
+                    meeting.Location,
+                    meeting.CountryName,
+                    meeting.CircuitInfoUrl,
+                    meeting.CircuitImageUrl,
+                    meeting.DateStart,
+                    meeting.DateEnd,
+                    meeting.Year));
+            }
+
+            return calendar;
+        }
+        catch
+        {
+            return CreateFallbackCalendar(year);
+        }
+    }
+
+    public async Task<MultiViewerCircuitInfoDto?> GetCircuitInfoAsync(string circuitInfoUrl, CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(circuitInfoUrl))
+        {
+            return null;
+        }
+
+        try
+        {
+            var response = await _multiViewerClient.GetAsync(circuitInfoUrl, cancellationToken);
+            response.EnsureSuccessStatusCode();
+
+            await using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
+            return await JsonSerializer.DeserializeAsync<MultiViewerCircuitInfoDto>(stream, JsonOptions, cancellationToken);
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    public async Task<GeoJsonCircuitFeatureDto?> GetGeoCircuitAsync(CalendarEntry weekend, CancellationToken cancellationToken)
+    {
+        try
+        {
+            _cachedGeoCircuits ??= await LoadGeoCircuitsAsync(cancellationToken);
+        }
+        catch
+        {
+            return null;
+        }
+
+        return _cachedGeoCircuits.FirstOrDefault(feature =>
+            Matches(feature.Properties.Name, weekend.CircuitShortName) ||
+            Matches(feature.Properties.Name, weekend.Location) ||
+            Matches(feature.Properties.Location, weekend.Location));
+    }
+
+    public async Task<OpenF1SessionDto?> GetPreferredRaceSessionAsync(CalendarEntry weekend, CancellationToken cancellationToken)
+    {
+        var sessions = await GetSessionsAsync($"sessions?meeting_key={weekend.MeetingKey}", cancellationToken);
+        if (sessions.Count == 0)
+        {
+            sessions = await GetSessionsAsync("sessions?session_key=latest", cancellationToken);
+        }
+
+        if (sessions.Count == 0)
+        {
+            return null;
+        }
+
+        var now = DateTimeOffset.UtcNow;
+        var ordered = sessions.OrderBy(session => session.DateStart).ToList();
+
+        var activeRace = ordered.FirstOrDefault(session =>
+            IsRaceSession(session) &&
+            now >= session.DateStart.AddMinutes(-30) &&
+            now <= (session.DateEnd ?? session.DateStart.AddHours(4)).AddMinutes(45));
+        if (activeRace is not null)
+        {
+            return activeRace;
+        }
+
+        var latestRace = ordered
+            .Where(IsRaceSession)
+            .OrderByDescending(session => session.DateStart)
+            .FirstOrDefault();
+
+        return latestRace ?? ordered.OrderByDescending(session => session.DateStart).FirstOrDefault();
+    }
+
+    public Task<IReadOnlyList<OpenF1DriverDto>> GetSessionDriversAsync(int sessionKey, CancellationToken cancellationToken)
+        => QueryOpenF1Async<OpenF1DriverDto>($"drivers?session_key={sessionKey}", cancellationToken);
+
+    public Task<IReadOnlyList<OpenF1IntervalDto>> GetIntervalsAsync(int sessionKey, DateTimeOffset since, CancellationToken cancellationToken)
+        => QueryOpenF1Async<OpenF1IntervalDto>($"intervals?session_key={sessionKey}&date>={Uri.EscapeDataString(since.UtcDateTime.ToString("O"))}", cancellationToken);
+
+    public Task<IReadOnlyList<OpenF1PositionDto>> GetPositionsAsync(int sessionKey, DateTimeOffset since, CancellationToken cancellationToken)
+        => QueryOpenF1Async<OpenF1PositionDto>($"position?session_key={sessionKey}&date>={Uri.EscapeDataString(since.UtcDateTime.ToString("O"))}", cancellationToken);
+
+    public Task<IReadOnlyList<OpenF1LocationDto>> GetLocationsAsync(int sessionKey, DateTimeOffset since, CancellationToken cancellationToken)
+        => QueryOpenF1Async<OpenF1LocationDto>($"location?session_key={sessionKey}&date>={Uri.EscapeDataString(since.UtcDateTime.ToString("O"))}", cancellationToken);
+
+    public Task<IReadOnlyList<OpenF1CarDataDto>> GetCarDataAsync(int sessionKey, DateTimeOffset since, CancellationToken cancellationToken)
+        => QueryOpenF1Async<OpenF1CarDataDto>($"car_data?session_key={sessionKey}&date>={Uri.EscapeDataString(since.UtcDateTime.ToString("O"))}", cancellationToken);
+
+    private async Task<IReadOnlyList<OpenF1SessionDto>> GetSessionsAsync(string requestUri, CancellationToken cancellationToken)
+        => await QueryOpenF1Async<OpenF1SessionDto>(requestUri, cancellationToken);
+
+    private async Task<IReadOnlyList<T>> QueryOpenF1Async<T>(string requestUri, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var response = await _openF1Client.GetAsync(requestUri, cancellationToken);
+            response.EnsureSuccessStatusCode();
+            var payload = await response.Content.ReadFromJsonAsync<List<T>>(JsonOptions, cancellationToken);
+            return payload is null ? Array.Empty<T>() : payload;
+        }
+        catch
+        {
+            return Array.Empty<T>();
+        }
+    }
+
+    private async Task<IReadOnlyList<GeoJsonCircuitFeatureDto>> LoadGeoCircuitsAsync(CancellationToken cancellationToken)
+    {
+        var response = await _multiViewerClient.GetAsync(CircuitsGeoJsonUrl, cancellationToken);
+        response.EnsureSuccessStatusCode();
+
+        await using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
+        var collection = await JsonSerializer.DeserializeAsync<GeoJsonFeatureCollectionDto>(stream, JsonOptions, cancellationToken);
+        return collection is null ? Array.Empty<GeoJsonCircuitFeatureDto>() : collection.Features;
+    }
+
+    private static bool IsRaceSession(OpenF1SessionDto session)
+        => session.SessionName.Contains("Race", StringComparison.OrdinalIgnoreCase)
+            || session.SessionType.Contains("Race", StringComparison.OrdinalIgnoreCase);
+
+    private static IReadOnlyList<CalendarEntry> CreateFallbackCalendar(int year)
+    {
+        if (year != 2026)
+        {
+            return Array.Empty<CalendarEntry>();
+        }
+
+        return new List<CalendarEntry>
+        {
+            FallbackWeekend(1, 1101, 1, "Australian Grand Prix", "Albert Park", "Melbourne", "Australia", "2026-03-06", "2026-03-08"),
+            FallbackWeekend(2, 1102, 2, "Chinese Grand Prix", "Shanghai", "Shanghai", "China", "2026-03-13", "2026-03-15"),
+            FallbackWeekend(3, 1103, 3, "Japanese Grand Prix", "Suzuka", "Suzuka", "Japan", "2026-03-27", "2026-03-29"),
+            FallbackWeekend(4, 1104, 4, "Miami Grand Prix", "Miami", "Miami", "United States", "2026-05-01", "2026-05-03"),
+            FallbackWeekend(5, 1105, 5, "Canadian Grand Prix", "Montreal", "Montreal", "Canada", "2026-05-22", "2026-05-24"),
+            FallbackWeekend(6, 1106, 6, "Monaco Grand Prix", "Monte Carlo", "Monte Carlo", "Monaco", "2026-06-05", "2026-06-07"),
+            FallbackWeekend(7, 1107, 7, "Barcelona-Catalunya Grand Prix", "Barcelona-Catalunya", "Barcelona", "Spain", "2026-06-12", "2026-06-14"),
+            FallbackWeekend(8, 1108, 8, "Austrian Grand Prix", "Austria", "Spielberg", "Austria", "2026-06-26", "2026-06-28"),
+            FallbackWeekend(9, 1109, 9, "British Grand Prix", "Silverstone", "Silverstone", "United Kingdom", "2026-07-03", "2026-07-05"),
+            FallbackWeekend(10, 1110, 10, "Belgian Grand Prix", "Spa-Francorchamps", "Spa-Francorchamps", "Belgium", "2026-07-17", "2026-07-19"),
+            FallbackWeekend(11, 1111, 11, "Hungarian Grand Prix", "Hungaroring", "Budapest", "Hungary", "2026-07-24", "2026-07-26"),
+            FallbackWeekend(12, 1112, 12, "Dutch Grand Prix", "Zandvoort", "Zandvoort", "Netherlands", "2026-08-21", "2026-08-23"),
+            FallbackWeekend(13, 1113, 13, "Italian Grand Prix", "Monza", "Monza", "Italy", "2026-09-04", "2026-09-06"),
+            FallbackWeekend(14, 1114, 14, "Spanish Grand Prix", "Madrid", "Madrid", "Spain", "2026-09-11", "2026-09-13"),
+            FallbackWeekend(15, 1115, 15, "Azerbaijan Grand Prix", "Baku", "Baku", "Azerbaijan", "2026-09-24", "2026-09-26"),
+            FallbackWeekend(16, 1116, 61, "Singapore Grand Prix", "Singapore", "Marina Bay", "Singapore", "2026-10-09", "2026-10-11"),
+            FallbackWeekend(17, 1117, 17, "United States Grand Prix", "Austin", "Austin", "United States", "2026-10-23", "2026-10-25"),
+            FallbackWeekend(18, 1118, 18, "Mexico City Grand Prix", "Mexico City", "Mexico City", "Mexico", "2026-10-30", "2026-11-01"),
+            FallbackWeekend(19, 1119, 19, "Sao Paulo Grand Prix", "Interlagos", "Sao Paulo", "Brazil", "2026-11-06", "2026-11-08"),
+            FallbackWeekend(20, 1120, 20, "Las Vegas Grand Prix", "Las Vegas", "Las Vegas", "United States", "2026-11-19", "2026-11-21"),
+            FallbackWeekend(21, 1121, 21, "Qatar Grand Prix", "Lusail", "Lusail", "Qatar", "2026-11-27", "2026-11-29"),
+            FallbackWeekend(22, 1122, 22, "Abu Dhabi Grand Prix", "Yas Marina", "Abu Dhabi", "United Arab Emirates", "2026-12-04", "2026-12-06")
+        };
+    }
+
+    private static CalendarEntry FallbackWeekend(
+        int round,
+        int meetingKey,
+        int circuitKey,
+        string grandPrixName,
+        string circuitShortName,
+        string location,
+        string countryName,
+        string startDate,
+        string endDate)
+    {
+        var start = DateTimeOffset.Parse($"{startDate}T00:00:00+00:00");
+        var end = DateTimeOffset.Parse($"{endDate}T23:59:59+00:00");
+
+        return new CalendarEntry(
+            round,
+            meetingKey,
+            circuitKey,
+            grandPrixName,
+            grandPrixName,
+            circuitShortName,
+            location,
+            countryName,
+            string.Empty,
+            null,
+            start,
+            end,
+            2026);
+    }
+
+    private static bool Matches(string left, string right)
+    {
+        if (string.IsNullOrWhiteSpace(left) || string.IsNullOrWhiteSpace(right))
+        {
+            return false;
+        }
+
+        var normalizedLeft = Normalize(left);
+        var normalizedRight = Normalize(right);
+        return normalizedLeft.Contains(normalizedRight, StringComparison.OrdinalIgnoreCase)
+            || normalizedRight.Contains(normalizedLeft, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static string Normalize(string value)
+        => value
+            .Replace("Circuit", string.Empty, StringComparison.OrdinalIgnoreCase)
+            .Replace("International Racing Course", string.Empty, StringComparison.OrdinalIgnoreCase)
+            .Replace("Autodrome", string.Empty, StringComparison.OrdinalIgnoreCase)
+            .Replace("Grand Prix", string.Empty, StringComparison.OrdinalIgnoreCase)
+            .Replace("  ", " ", StringComparison.Ordinal)
+            .Trim();
+
+    public void Dispose()
+    {
+        _openF1Client.Dispose();
+        _multiViewerClient.Dispose();
+    }
+}
+
+============================================================
+FILE: C:\codex\Formula 1\F1TrackMapper\Services\OpenF1LiveTimingService.cs
+============================================================
+using System.Text.Json;
+using System.Windows;
+using System.Windows.Threading;
+using F1TrackMapper.Models;
+
+namespace F1TrackMapper.Services;
+
+public sealed class OpenF1LiveTimingService : IDisposable
+{
+    private readonly OpenF1ApiClient _apiClient = new();
+    private readonly DispatcherTimer _timer;
+    private readonly Dictionary<int, DriverDefinition> _driversByNumber = new();
+    private readonly Dictionary<int, DriverSnapshot> _lastSnapshotsByNumber = new();
+
+    private CircuitDefinition? _circuit;
+    private CalendarEntry? _weekend;
+    private OpenF1SessionDto? _session;
+    private TrackTransform? _currentTransform;
+    private bool _pollInProgress;
+
+    public OpenF1LiveTimingService()
+    {
+        _timer = new DispatcherTimer
+        {
+            Interval = TimeSpan.FromSeconds(2)
+        };
+        _timer.Tick += OnTick;
+    }
+
+    public event EventHandler<IReadOnlyList<DriverSnapshot>>? TelemetryUpdated;
+
+    public string LastStatusMessage { get; private set; } = "Live timing is idle.";
+
+    public async Task<bool> TryActivateAsync(CalendarEntry weekend, CircuitDefinition circuit, CancellationToken cancellationToken)
+    {
+        Stop();
+        _weekend = weekend;
+        _circuit = circuit;
+        _session = await _apiClient.GetPreferredRaceSessionAsync(weekend, cancellationToken);
+        _driversByNumber.Clear();
+        _lastSnapshotsByNumber.Clear();
+        _currentTransform = null;
+
+        if (_session is null)
+        {
+            LastStatusMessage = "No race session was available from OpenF1 for this weekend.";
+            return false;
+        }
+
+        var liveDrivers = await _apiClient.GetSessionDriversAsync(_session.SessionKey, cancellationToken);
+        if (liveDrivers.Count == 0)
+        {
+            LastStatusMessage = $"OpenF1 returned no driver roster for {_session.SessionName}.";
+            return false;
+        }
+
+        foreach (var driver in CircuitCatalog.CreateLiveGrid(liveDrivers))
+        {
+            if (driver.DriverNumber is int driverNumber)
+            {
+                _driversByNumber[driverNumber] = driver;
+            }
+        }
+
+        var initialSnapshots = await PollOnceAsync(cancellationToken);
+        if (initialSnapshots.Count == 0)
+        {
+            LastStatusMessage = "The race session was found, but no live driver packets were available yet.";
+            return false;
+        }
+
+        _timer.Start();
+        LastStatusMessage = $"Live {_session.SessionName.ToLowerInvariant()} timing is connected for {weekend.GrandPrixName}.";
+        return true;
+    }
+
+    public void Stop()
+    {
+        if (_timer.IsEnabled)
+        {
+            _timer.Stop();
+        }
+    }
+
+    public void Dispose()
+    {
+        Stop();
+        _timer.Tick -= OnTick;
+        _apiClient.Dispose();
+    }
+
+    private async void OnTick(object? sender, EventArgs e)
+    {
+        if (_pollInProgress || _session is null || _circuit is null)
+        {
+            return;
+        }
+
+        _pollInProgress = true;
+        try
+        {
+            await PollOnceAsync(CancellationToken.None);
+        }
+        finally
+        {
+            _pollInProgress = false;
+        }
+    }
+
+    private async Task<IReadOnlyList<DriverSnapshot>> PollOnceAsync(CancellationToken cancellationToken)
+    {
+        if (_session is null || _circuit is null)
+        {
+            return Array.Empty<DriverSnapshot>();
+        }
+
+        var now = DateTimeOffset.UtcNow;
+        var intervalsTask = _apiClient.GetIntervalsAsync(_session.SessionKey, now.AddSeconds(-25), cancellationToken);
+        var positionsTask = _apiClient.GetPositionsAsync(_session.SessionKey, now.AddMinutes(-2), cancellationToken);
+        var locationsTask = _apiClient.GetLocationsAsync(_session.SessionKey, now.AddSeconds(-18), cancellationToken);
+        var carDataTask = _apiClient.GetCarDataAsync(_session.SessionKey, now.AddSeconds(-8), cancellationToken);
+        await Task.WhenAll(intervalsTask, positionsTask, locationsTask, carDataTask);
+
+        var intervals = intervalsTask.Result;
+        var positions = positionsTask.Result;
+        var locations = locationsTask.Result;
+        var carData = carDataTask.Result;
+
+        if (locations.Count == 0)
+        {
+            return Array.Empty<DriverSnapshot>();
+        }
+
+        RefreshTransform(locations);
+
+        var latestLocations = locations
+            .GroupBy(location => location.DriverNumber)
+            .ToDictionary(group => group.Key, group => group.OrderBy(entry => entry.Date).Last());
+
+        var latestIntervals = intervals
+            .GroupBy(entry => entry.DriverNumber)
+            .ToDictionary(group => group.Key, group => group.OrderBy(entry => entry.Date).Last());
+
+        var latestPositions = positions
+            .GroupBy(entry => entry.DriverNumber)
+            .ToDictionary(group => group.Key, group => group.OrderBy(entry => entry.Date).Last());
+
+        var latestSpeeds = carData
+            .Where(entry => entry.Speed is not null)
+            .GroupBy(entry => entry.DriverNumber)
+            .ToDictionary(group => group.Key, group => group.OrderBy(entry => entry.Date).Last().Speed ?? 0);
+
+        var ranking = BuildRanking(latestIntervals, latestPositions);
+        if (ranking.Count == 0)
+        {
+            return Array.Empty<DriverSnapshot>();
+        }
+
+        var snapshots = new List<DriverSnapshot>(ranking.Count);
+        for (var index = 0; index < ranking.Count; index++)
+        {
+            var entry = ranking[index];
+            if (!_driversByNumber.TryGetValue(entry.DriverNumber, out var driver))
+            {
+                continue;
+            }
+
+            var progress = ResolveDriverProgress(entry.DriverNumber, latestLocations);
+            var speed = latestSpeeds.TryGetValue(entry.DriverNumber, out var liveSpeed) && liveSpeed > 0
+                ? liveSpeed
+                : _circuit.AverageSpeedKph;
+
+            var snapshot = new DriverSnapshot(
+                driver,
+                index + 1,
+                0,
+                progress,
+                speed,
+                entry.GapSeconds,
+                entry.GapLabel,
+                0);
+
+            snapshots.Add(snapshot);
+            _lastSnapshotsByNumber[entry.DriverNumber] = snapshot;
+        }
+
+        if (snapshots.Count > 0)
+        {
+            TelemetryUpdated?.Invoke(this, snapshots);
+        }
+
+        return snapshots;
+    }
+
+    private void RefreshTransform(IReadOnlyList<OpenF1LocationDto> locations)
+    {
+        if (_circuit is null)
+        {
+            return;
+        }
+
+        var cloud = locations
+            .OrderBy(location => location.Date)
+            .Select(location => location.ToPoint())
+            .Distinct()
+            .ToList();
+
+        if (cloud.Count < 12)
+        {
+            return;
+        }
+
+        var candidates = new List<TrackTransform>();
+        foreach (var mirrorX in new[] { false, true })
+        {
+            foreach (var mirrorY in new[] { false, true })
+            {
+                var transformedInput = ApplyMirror(cloud, mirrorX, mirrorY);
+                var sourceAngle = GetPrincipalAngle(transformedInput);
+                var targetAngle = GetPrincipalAngle(_circuit.RawTrackPoints);
+                var sourceCenter = GetCentroid(cloud);
+                var targetCenter = GetCentroid(_circuit.RawTrackPoints);
+                var sourceScale = GetRadialScale(transformedInput, GetCentroid(transformedInput));
+                var targetScale = GetRadialScale(_circuit.RawTrackPoints, targetCenter);
+                var scale = sourceScale <= 0.0001 ? 1.0 : targetScale / sourceScale;
+
+                foreach (var rotation in new[] { targetAngle - sourceAngle, targetAngle - sourceAngle + Math.PI })
+                {
+                    candidates.Add(new TrackTransform(sourceCenter, targetCenter, rotation, scale, mirrorX, mirrorY));
+                }
+            }
+        }
+
+        var best = candidates
+            .Select(candidate => new { Candidate = candidate, Score = ScoreTransform(candidate, cloud) })
+            .OrderBy(result => result.Score)
+            .FirstOrDefault();
+
+        if (best is not null)
+        {
+            _currentTransform = best.Candidate;
+        }
+    }
+
+    private double ResolveDriverProgress(int driverNumber, IReadOnlyDictionary<int, OpenF1LocationDto> latestLocations)
+    {
+        if (_circuit is null)
+        {
+            return 0;
+        }
+
+        if (_currentTransform is not null && latestLocations.TryGetValue(driverNumber, out var location))
+        {
+            var projected = _currentTransform.Apply(location.ToPoint());
+            if (_circuit.TryProjectRawPointToProgress(projected, out var progress, out _))
+            {
+                if (_lastSnapshotsByNumber.TryGetValue(driverNumber, out var previous))
+                {
+                    return SmoothProgress(previous.Progress, progress);
+                }
+
+                return progress;
+            }
+        }
+
+        if (_lastSnapshotsByNumber.TryGetValue(driverNumber, out var fallback))
+        {
+            return fallback.Progress;
+        }
+
+        return 0;
+    }
+
+    private List<RankingEntry> BuildRanking(
+        IReadOnlyDictionary<int, OpenF1IntervalDto> latestIntervals,
+        IReadOnlyDictionary<int, OpenF1PositionDto> latestPositions)
+    {
+        if (latestIntervals.Count > 0)
+        {
+            return latestIntervals
+                .Select(pair => BuildIntervalRanking(pair.Key, pair.Value))
+                .OrderBy(entry => entry.SortGroup)
+                .ThenBy(entry => entry.SortValue)
+                .ThenBy(entry => entry.DriverNumber)
+                .ToList();
+        }
+
+        if (latestPositions.Count > 0)
+        {
+            return latestPositions
+                .Select(pair => new RankingEntry(pair.Key, pair.Value.Position, (pair.Value.Position - 1) * 2.5, pair.Value.Position == 1 ? "Leader" : $"+{((pair.Value.Position - 1) * 2.5):0.0}s", 0, pair.Value.Position))
+                .OrderBy(entry => entry.Position)
+                .ToList();
+        }
+
+        return new List<RankingEntry>();
+    }
+
+    private static RankingEntry BuildIntervalRanking(int driverNumber, OpenF1IntervalDto interval)
+    {
+        var (gapLabel, gapSeconds, sortGroup, sortValue) = ParseGap(interval.GapToLeader);
+        var position = sortGroup == 0 ? 1 : 0;
+        return new RankingEntry(driverNumber, position, gapSeconds, gapLabel, sortGroup, sortValue);
+    }
+
+    private static (string GapLabel, double GapSeconds, int SortGroup, double SortValue) ParseGap(JsonElement element)
+    {
+        if (element.ValueKind is JsonValueKind.Null or JsonValueKind.Undefined)
+        {
+            return ("Leader", 0, 0, 0);
+        }
+
+        if (element.ValueKind == JsonValueKind.Number && element.TryGetDouble(out var numericGap))
+        {
+            return ($"+{numericGap:0.0}s", numericGap, 1, numericGap);
+        }
+
+        if (element.ValueKind == JsonValueKind.String)
+        {
+            var text = element.GetString() ?? string.Empty;
+            if (double.TryParse(text.TrimStart('+'), out var parsedGap))
+            {
+                return ($"+{parsedGap:0.0}s", parsedGap, 1, parsedGap);
+            }
+
+            if (text.Contains("LAP", StringComparison.OrdinalIgnoreCase))
+            {
+                var lapCount = ExtractLeadingNumber(text);
+                return (text.Trim(), lapCount * 90.0, 2, lapCount);
+            }
+
+            return (text.Trim(), 0, 3, double.MaxValue / 2);
+        }
+
+        return ("Live", 0, 3, double.MaxValue);
+    }
+
+    private double ScoreTransform(TrackTransform transform, IReadOnlyList<Point> liveCloud)
+    {
+        if (_circuit is null)
+        {
+            return double.MaxValue;
+        }
+
+        double total = 0;
+        var sampleCount = 0;
+        var step = Math.Max(1, liveCloud.Count / 180);
+        for (var index = 0; index < liveCloud.Count; index += step)
+        {
+            var transformed = transform.Apply(liveCloud[index]);
+            if (_circuit.TryProjectRawPointToProgress(transformed, out _, out var distance))
+            {
+                total += distance;
+                sampleCount++;
+            }
+        }
+
+        return sampleCount == 0 ? double.MaxValue : total / sampleCount;
+    }
+
+    private static double SmoothProgress(double previous, double current)
+    {
+        var delta = current - previous;
+        if (delta < -0.5)
+        {
+            current += 1.0;
+        }
+        else if (delta > 0.5)
+        {
+            current -= 1.0;
+        }
+
+        var blended = previous + ((current - previous) * 0.65);
+        blended %= 1.0;
+        if (blended < 0)
+        {
+            blended += 1.0;
+        }
+
+        return blended;
+    }
+
+    private static List<Point> ApplyMirror(IReadOnlyList<Point> points, bool mirrorX, bool mirrorY)
+    {
+        var center = GetCentroid(points);
+        return points.Select(point => new Point(
+            center.X + ((point.X - center.X) * (mirrorX ? -1 : 1)),
+            center.Y + ((point.Y - center.Y) * (mirrorY ? -1 : 1)))).ToList();
+    }
+
+    private static Point GetCentroid(IReadOnlyList<Point> points)
+        => new(points.Average(point => point.X), points.Average(point => point.Y));
+
+    private static double GetRadialScale(IReadOnlyList<Point> points, Point center)
+    {
+        var total = 0.0;
+        foreach (var point in points)
+        {
+            total += Math.Sqrt(Math.Pow(point.X - center.X, 2) + Math.Pow(point.Y - center.Y, 2));
+        }
+
+        return points.Count == 0 ? 0 : total / points.Count;
+    }
+
+    private static double GetPrincipalAngle(IReadOnlyList<Point> points)
+    {
+        var center = GetCentroid(points);
+        var covXx = 0.0;
+        var covYy = 0.0;
+        var covXy = 0.0;
+
+        foreach (var point in points)
+        {
+            var dx = point.X - center.X;
+            var dy = point.Y - center.Y;
+            covXx += dx * dx;
+            covYy += dy * dy;
+            covXy += dx * dy;
+        }
+
+        return 0.5 * Math.Atan2(2 * covXy, covXx - covYy);
+    }
+
+    private static double ExtractLeadingNumber(string text)
+    {
+        var digits = new string(text.Where(character => char.IsDigit(character) || character == '.').ToArray());
+        return double.TryParse(digits, out var parsed) ? parsed : 1;
+    }
+
+    private sealed record RankingEntry(int DriverNumber, int Position, double GapSeconds, string GapLabel, int SortGroup, double SortValue);
+
+    private sealed record TrackTransform(Point SourceCenter, Point TargetCenter, double RotationRadians, double Scale, bool MirrorX, bool MirrorY)
+    {
+        public Point Apply(Point source)
+        {
+            var dx = source.X - SourceCenter.X;
+            var dy = source.Y - SourceCenter.Y;
+            if (MirrorX)
+            {
+                dx *= -1;
+            }
+
+            if (MirrorY)
+            {
+                dy *= -1;
+            }
+
+            var rotatedX = (dx * Math.Cos(RotationRadians)) - (dy * Math.Sin(RotationRadians));
+            var rotatedY = (dx * Math.Sin(RotationRadians)) + (dy * Math.Cos(RotationRadians));
+            return new Point(TargetCenter.X + (rotatedX * Scale), TargetCenter.Y + (rotatedY * Scale));
+        }
+    }
+}
+
+============================================================
+FILE: C:\codex\Formula 1\F1TrackMapper\Utils\AppVersionInfo.cs
+============================================================
+namespace F1TrackMapper.Utils;
+
+public static class AppVersionInfo
+{
+    public const string AppName = "F1 Track Mapper";
+    public const string Channel = "Demo";
+    public const string Version = "v40";
+
+    public static string BuildLabel => $"{AppName} {Version} ({Channel})";
+}
+
+============================================================
+FILE: C:\codex\Formula 1\F1TrackMapper\ViewModels\MainViewModel.cs
+============================================================
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows;
+using System.Windows.Media;
+using F1TrackMapper.Models;
+using F1TrackMapper.Services;
+
+namespace F1TrackMapper.ViewModels;
+
+public sealed class MainViewModel : INotifyPropertyChanged, IDisposable
+{
+    private const double TrackWidth = 960;
+    private const double TrackHeight = 620;
+    private const double MinMapZoom = 0.75;
+    private const double MaxMapZoom = 1.85;
+    private const double DefaultMapZoom = 1.0;
+
+    private readonly OpenF1ApiClient _apiClient;
+    private readonly MockLiveTimingService _mockLiveTimingService;
+    private readonly OpenF1LiveTimingService _openF1LiveTimingService;
+    private readonly CancellationTokenSource _disposeCts = new();
+
+    private CircuitDefinition? _activeCircuit;
+    private CalendarEntry? _selectedWeekend;
+    private Geometry? _trackGeometry;
+    private Geometry? _pitLaneGeometry;
+    private Brush _accentBrush = CreateBrush("#E10600");
+    private string _focusWeekendName = "Loading calendar...";
+    private string _focusWeekendDate = string.Empty;
+    private string _calendarSelectionNote = "Fetching real 2026 circuit data...";
+    private string _selectedCircuitName = "Waiting for circuit metadata";
+    private string _selectedCircuitSummary = "The hand-drawn placeholders are being replaced with real circuit geometry.";
+    private string _trackStatsLine = string.Empty;
+    private string _statusText = "Loading actual circuit geometry from live metadata and fallback GeoJSON sources.";
+    private string _feedStatusBadge = "REAL MAP LOADING";
+    private string _telemetryModeText = "Map geometry is real. Driver motion remains demo until the live timing adapter is wired in.";
+    private string _footerHint = string.Empty;
+    private string _lastUpdatedLabel = string.Empty;
+    private double _mapZoom = DefaultMapZoom;
+    private bool _suppressSelectionApply;
+    private bool _isLiveTimingActive;
+    private bool _isDemoModeForced;
+    private bool _isTelemetryToggleBusy;
+
+    public MainViewModel()
+    {
+        Weekends = new ObservableCollection<CalendarEntry>();
+        TurnMarkers = new ObservableCollection<MarkerDisplayState>();
+        SectorMarkers = new ObservableCollection<MarkerDisplayState>();
+        SectorCards = new ObservableCollection<SectorCardState>();
+        Drivers = new ObservableCollection<DriverDisplayState>();
+
+        _apiClient = new OpenF1ApiClient();
+        _mockLiveTimingService = new MockLiveTimingService();
+        _mockLiveTimingService.LoadGrid(CircuitCatalog.CreateOfficial2026Grid());
+        _mockLiveTimingService.TelemetryUpdated += OnTelemetryUpdated;
+
+        _openF1LiveTimingService = new OpenF1LiveTimingService();
+        _openF1LiveTimingService.TelemetryUpdated += OnTelemetryUpdated;
+
+        _ = InitializeAsync(_disposeCts.Token);
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    public ObservableCollection<CalendarEntry> Weekends { get; }
+    public ObservableCollection<MarkerDisplayState> TurnMarkers { get; }
+    public ObservableCollection<MarkerDisplayState> SectorMarkers { get; }
+    public ObservableCollection<SectorCardState> SectorCards { get; }
+    public ObservableCollection<DriverDisplayState> Drivers { get; }
+
+    public CalendarEntry? SelectedWeekend
+    {
+        get => _selectedWeekend;
+        set
+        {
+            if (Equals(value, _selectedWeekend))
+            {
+                return;
+            }
+
+            _selectedWeekend = value;
+            OnPropertyChanged();
+
+            if (!_suppressSelectionApply && value is not null)
+            {
+                _ = LoadActualCircuitAsync(value, autoMode: false, _disposeCts.Token);
+            }
+        }
+    }
+
+    public Geometry? TrackGeometry
+    {
+        get => _trackGeometry;
+        private set => SetField(ref _trackGeometry, value);
+    }
+
+    public Geometry? PitLaneGeometry
+    {
+        get => _pitLaneGeometry;
+        private set => SetField(ref _pitLaneGeometry, value);
+    }
+
+    public Brush AccentBrush
+    {
+        get => _accentBrush;
+        private set => SetField(ref _accentBrush, value);
+    }
+
+    public string FocusWeekendName
+    {
+        get => _focusWeekendName;
+        private set => SetField(ref _focusWeekendName, value);
+    }
+
+    public string FocusWeekendDate
+    {
+        get => _focusWeekendDate;
+        private set => SetField(ref _focusWeekendDate, value);
+    }
+
+    public string CalendarSelectionNote
+    {
+        get => _calendarSelectionNote;
+        private set => SetField(ref _calendarSelectionNote, value);
+    }
+
+    public string SelectedCircuitName
+    {
+        get => _selectedCircuitName;
+        private set => SetField(ref _selectedCircuitName, value);
+    }
+
+    public string SelectedCircuitSummary
+    {
+        get => _selectedCircuitSummary;
+        private set => SetField(ref _selectedCircuitSummary, value);
+    }
+
+    public string TrackStatsLine
+    {
+        get => _trackStatsLine;
+        private set => SetField(ref _trackStatsLine, value);
+    }
+
+    public string StatusText
+    {
+        get => _statusText;
+        private set => SetField(ref _statusText, value);
+    }
+
+    public string FeedStatusBadge
+    {
+        get => _feedStatusBadge;
+        private set => SetField(ref _feedStatusBadge, value);
+    }
+
+    public string TelemetryModeText
+    {
+        get => _telemetryModeText;
+        private set => SetField(ref _telemetryModeText, value);
+    }
+
+    public string FooterHint
+    {
+        get => _footerHint;
+        private set => SetField(ref _footerHint, value);
+    }
+
+    public string LastUpdatedLabel
+    {
+        get => _lastUpdatedLabel;
+        private set => SetField(ref _lastUpdatedLabel, value);
+    }
+
+    public bool IsDemoModeForced
+    {
+        get => _isDemoModeForced;
+        private set
+        {
+            if (_isDemoModeForced == value)
+            {
+                return;
+            }
+
+            _isDemoModeForced = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(TelemetryToggleLabel));
+            OnPropertyChanged(nameof(TelemetryToggleCaption));
+        }
+    }
+
+    public string TelemetryToggleLabel
+    {
+        get
+        {
+            if (_isTelemetryToggleBusy)
+            {
+                return "Switching...";
+            }
+
+            return IsDemoModeForced ? "Switch To Live" : "Switch To Demo";
+        }
+    }
+
+    public string TelemetryToggleCaption
+        => IsDemoModeForced
+            ? "Demo mode is locked on. Click to retry the real live feed for this weekend."
+            : "Live timing is preferred when available. Click to force the old demo motion.";
+
+    public double MapZoom
+    {
+        get => _mapZoom;
+        set
+        {
+            var clamped = Math.Max(MinMapZoom, Math.Min(MaxMapZoom, value));
+            if (Math.Abs(_mapZoom - clamped) < 0.001)
+            {
+                return;
+            }
+
+            _mapZoom = clamped;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(MapZoomLabel));
+        }
+    }
+
+    public string MapZoomLabel => $"{MapZoom * 100:0}%";
+
+    public void ZoomIn() => MapZoom += 0.1;
+
+    public void ZoomOut() => MapZoom -= 0.1;
+
+    public void ResetZoom() => MapZoom = DefaultMapZoom;
+
+    public async Task ToggleTelemetryModeAsync()
+    {
+        if (_selectedWeekend is null || _isTelemetryToggleBusy)
+        {
+            return;
+        }
+
+        _isTelemetryToggleBusy = true;
+        OnPropertyChanged(nameof(TelemetryToggleLabel));
+
+        try
+        {
+            IsDemoModeForced = !IsDemoModeForced;
+            await LoadActualCircuitAsync(_selectedWeekend, autoMode: false, _disposeCts.Token);
+        }
+        finally
+        {
+            _isTelemetryToggleBusy = false;
+            OnPropertyChanged(nameof(TelemetryToggleLabel));
+            OnPropertyChanged(nameof(TelemetryToggleCaption));
+        }
+    }
+
+    public void Dispose()
+    {
+        _disposeCts.Cancel();
+        _mockLiveTimingService.TelemetryUpdated -= OnTelemetryUpdated;
+        _openF1LiveTimingService.TelemetryUpdated -= OnTelemetryUpdated;
+        _mockLiveTimingService.Dispose();
+        _openF1LiveTimingService.Dispose();
+        _apiClient.Dispose();
+        _disposeCts.Dispose();
+    }
+
+    private async Task InitializeAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            var calendar = await _apiClient.GetRaceCalendarAsync(DateTime.Today.Year, cancellationToken);
+            foreach (var weekend in calendar)
+            {
+                Weekends.Add(weekend);
+            }
+
+            if (Weekends.Count == 0)
+            {
+                StatusText = "No race meetings were returned for the current season.";
+                FeedStatusBadge = "NO CIRCUITS";
+                return;
+            }
+
+            var autoSelection = SelectWeekendForDate(DateTimeOffset.Now, Weekends);
+            _suppressSelectionApply = true;
+            SelectedWeekend = autoSelection;
+            _suppressSelectionApply = false;
+            await LoadActualCircuitAsync(autoSelection, autoMode: true, cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            StatusText = $"Could not load real circuit data: {ex.Message}";
+            FeedStatusBadge = "MAP LOAD FAILED";
+            SelectedCircuitSummary = "The app could not reach the circuit data sources, so the real track outline could not be loaded.";
+        }
+    }
+
+    private async Task LoadActualCircuitAsync(CalendarEntry weekend, bool autoMode, CancellationToken cancellationToken)
+    {
+        try
+        {
+            _mockLiveTimingService.Stop();
+            _openF1LiveTimingService.Stop();
+            Drivers.Clear();
+            FeedStatusBadge = "REAL MAP LOADING";
+            StatusText = $"Loading the actual {weekend.CircuitShortName} circuit outline from live metadata first, with GeoJSON fallback if needed.";
+
+            var circuitInfo = await _apiClient.GetCircuitInfoAsync(weekend.CircuitInfoUrl, cancellationToken);
+            var geoCircuit = await _apiClient.GetGeoCircuitAsync(weekend, cancellationToken);
+
+            if (circuitInfo is null && geoCircuit is null)
+            {
+                throw new InvalidOperationException("No circuit layout sources were available.");
+            }
+
+            var circuit = ActualCircuitBuilder.Build(weekend, circuitInfo, geoCircuit);
+            var usedGeoJson = circuitInfo is null && geoCircuit is not null;
+            var liveConnected = false;
+
+            if (!IsDemoModeForced)
+            {
+                liveConnected = await _openF1LiveTimingService.TryActivateAsync(weekend, circuit, cancellationToken);
+            }
+
+            _isLiveTimingActive = liveConnected;
+
+            if (IsDemoModeForced)
+            {
+                _mockLiveTimingService.SetCircuit(circuit);
+                _mockLiveTimingService.Start();
+            }
+
+            ApplyCircuit(weekend, circuit, autoMode, usedGeoJson, liveConnected);
+            LastUpdatedLabel = liveConnected
+                ? $"Live sync {DateTime.Now:HH:mm:ss}"
+                : $"Map synced {DateTime.Now:HH:mm:ss}";
+        }
+        catch (Exception ex)
+        {
+            StatusText = $"Could not load the actual track map: {ex.Message}";
+            FeedStatusBadge = "MAP LOAD FAILED";
+        }
+    }
+
+    private void ApplyCircuit(CalendarEntry weekend, CircuitDefinition circuit, bool autoMode, bool usedGeoJson, bool liveConnected)
+    {
+        _activeCircuit = circuit;
+        AccentBrush = CreateBrush(circuit.AccentHex);
+        TrackGeometry = circuit.CreateTrackGeometry(TrackWidth, TrackHeight);
+        PitLaneGeometry = circuit.CreatePitLaneGeometry(TrackWidth, TrackHeight);
+
+        FocusWeekendName = weekend.GrandPrixName;
+        FocusWeekendDate = $"{weekend.DateLabel}  •  {weekend.Location}, {weekend.CountryName}";
+        CalendarSelectionNote = autoMode
+            ? "Auto-loaded with real circuit geometry for the current season."
+            : "Manual preview is using real circuit geometry.";
+
+        SelectedCircuitName = circuit.DisplayName;
+        SelectedCircuitSummary = circuit.Summary;
+        var turnCount = circuit.Markers.Count(marker => marker.Kind == MarkerKind.Turn);
+        var sectorCount = circuit.Markers.Count(marker => marker.Kind == MarkerKind.Sector);
+        TrackStatsLine = $"Actual corners: {turnCount}  •  Marshal sectors: {sectorCount}  •  Pit lane overlay: {(PitLaneGeometry is null ? "Unavailable" : "Visible")}";
+        StatusText = usedGeoJson
+            ? "The circuit outline is using bacinger/f1-circuits GeoJSON because live metadata was unavailable for this round."
+            : "The circuit outline now comes from the live circuit metadata source.";
+
+        if (liveConnected)
+        {
+            FeedStatusBadge = usedGeoJson ? "GEOJSON MAP · LIVE" : "REAL MAP · LIVE";
+            TelemetryModeText = _openF1LiveTimingService.LastStatusMessage;
+            FooterHint = "Cars on the track are now driven by OpenF1 live timing packets when an active race session is available.";
+        }
+        else if (IsDemoModeForced)
+        {
+            FeedStatusBadge = usedGeoJson ? "GEOJSON MAP · DEMO MODE" : "REAL MAP · DEMO MODE";
+            TelemetryModeText = "Demo mode is manually enabled, so the track uses the previous simulated car motion.";
+            FooterHint = "The app is intentionally using demo motion on the real map until you switch live timing back on.";
+        }
+        else
+        {
+            FeedStatusBadge = usedGeoJson ? "GEOJSON MAP · WAITING LIVE" : "REAL MAP · WAITING LIVE";
+            TelemetryModeText = _openF1LiveTimingService.LastStatusMessage;
+            FooterHint = "Live mode is on, but the OpenF1 race feed is not available yet for this session. Switch to Demo if you want the simulated motion.";
+        }
+
+        BuildTrackMarkers(circuit, usedGeoJson);
+    }
+
+    private void BuildTrackMarkers(CircuitDefinition circuit, bool usedGeoJson)
+    {
+        TurnMarkers.Clear();
+        SectorMarkers.Clear();
+        SectorCards.Clear();
+
+        foreach (var marker in circuit.Markers.Where(marker => marker.Kind == MarkerKind.Turn))
+        {
+            var point = circuit.MapMarkerPoint(marker.TrackPoint, TrackWidth, TrackHeight);
+            var offset = GetOffset(marker.Angle, 20);
+            TurnMarkers.Add(new MarkerDisplayState(
+                marker.Title,
+                marker.Subtitle,
+                point.X + offset.X,
+                point.Y + offset.Y,
+                CreateBrush("#F6F9FD")));
+        }
+
+        foreach (var marker in circuit.Markers.Where(marker => marker.Kind is MarkerKind.Sector or MarkerKind.Pit))
+        {
+            var point = circuit.MapMarkerPoint(marker.TrackPoint, TrackWidth, TrackHeight);
+            var offset = marker.Kind == MarkerKind.Pit ? new Vector(26, -20) : GetOffset(marker.Angle, 8);
+            var brushHex = marker.Kind == MarkerKind.Pit ? "#FFD166" : circuit.AccentHex;
+            SectorMarkers.Add(new MarkerDisplayState(
+                marker.Title,
+                marker.Subtitle,
+                point.X + offset.X,
+                point.Y + offset.Y,
+                CreateBrush(brushHex)));
+        }
+
+        SectorCards.Add(new SectorCardState(
+            usedGeoJson ? "GEO" : "TRN",
+            usedGeoJson ? "GeoJSON layout active" : $"{circuit.Markers.Count(marker => marker.Kind == MarkerKind.Turn)} turn markers",
+            usedGeoJson ? "Track shape comes from bacinger/f1-circuits when live metadata is missing." : "Corner callouts come from the live circuit metadata positions.",
+            CreateBrush(circuit.AccentHex)));
+        SectorCards.Add(new SectorCardState(
+            "SEC",
+            $"{circuit.Markers.Count(marker => marker.Kind == MarkerKind.Sector)} sector markers",
+            usedGeoJson ? "Sector markers appear when compatible live metadata is also available." : "Sector markers use the live circuit metadata coordinates.",
+            CreateBrush(circuit.AccentHex)));
+        SectorCards.Add(new SectorCardState(
+            _isLiveTimingActive ? "LIVE" : "DEMO",
+            _isLiveTimingActive ? "OpenF1 live telemetry active" : IsDemoModeForced ? "Manual demo mode active" : "Live mode waiting",
+            _isLiveTimingActive
+                ? "The driver chips and leaderboard are updating from the active race session feed."
+                : IsDemoModeForced
+                    ? "You forced the app back to demo mode, so the previous simulated motion is running on top of the real circuit."
+                    : "The app is keeping the real circuit loaded while it waits for usable OpenF1 live race packets.",
+            CreateBrush(_isLiveTimingActive ? "#7AE582" : "#FFD166")));
+    }
+
+    private void OnTelemetryUpdated(object? sender, IReadOnlyList<DriverSnapshot> snapshots)
+    {
+        if (_activeCircuit is null)
+        {
+            return;
+        }
+
+        Drivers.Clear();
+
+        foreach (var snapshot in snapshots)
+        {
+            var point = _activeCircuit.GetCanvasPoint(snapshot.Progress, TrackWidth, TrackHeight, snapshot.LaneOffset);
+            var accent = CreateBrush(snapshot.Driver.AccentHex);
+            var teamLine = _isLiveTimingActive
+                ? $"{snapshot.Driver.TeamName}  •  Live timing"
+                : $"{snapshot.Driver.TeamName}  •  Demo motion";
+            var speedText = _isLiveTimingActive
+                ? $"{snapshot.SpeedKph:0} km/h"
+                : "Real map";
+
+            Drivers.Add(new DriverDisplayState(
+                snapshot.Position,
+                snapshot.Driver.Code,
+                snapshot.Driver.TeamBadge,
+                snapshot.Driver.TeamLogoPath,
+                snapshot.Driver.FullName,
+                snapshot.Driver.TeamName,
+                $"{snapshot.Driver.FullName}  •  {snapshot.Driver.Code}",
+                teamLine,
+                snapshot.GapLabel,
+                speedText,
+                Math.Max(0, point.X - 18),
+                Math.Max(0, point.Y - 10),
+                accent,
+                CreateSurfaceBrush(snapshot.Driver.AccentHex, 0.28),
+                CreateSurfaceBrush(snapshot.Driver.AccentHex, 0.55),
+                CreateBrush("#F8FBFF"),
+                CreateBrush("#D2E0ED")));
+        }
+
+        LastUpdatedLabel = _isLiveTimingActive
+            ? $"Live updated {DateTime.Now:HH:mm:ss}"
+            : $"Updated {DateTime.Now:HH:mm:ss}";
+    }
+
+    private static CalendarEntry SelectWeekendForDate(DateTimeOffset today, IEnumerable<CalendarEntry> weekends)
+    {
+        var list = weekends.ToList();
+        var current = list.FirstOrDefault(weekend => today >= weekend.StartDate && today <= weekend.EndDate.AddDays(1));
+        if (current is not null)
+        {
+            return current;
+        }
+
+        var recent = list
+            .Where(weekend => today > weekend.EndDate && (today - weekend.EndDate).TotalDays <= 7)
+            .OrderBy(weekend => today - weekend.EndDate)
+            .FirstOrDefault();
+
+        if (recent is not null)
+        {
+            return recent;
+        }
+
+        var next = list
+            .Where(weekend => weekend.StartDate >= today)
+            .OrderBy(weekend => weekend.StartDate)
+            .FirstOrDefault();
+
+        return next ?? list.Last();
+    }
+
+    private static Vector GetOffset(double angleDegrees, double distance)
+    {
+        var radians = angleDegrees * Math.PI / 180.0;
+        return new Vector(Math.Cos(radians) * distance, -Math.Sin(radians) * distance);
+    }
+
+    private static SolidColorBrush CreateBrush(string hex)
+    {
+        var brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(hex));
+        brush.Freeze();
+        return brush;
+    }
+
+    private static SolidColorBrush CreateSurfaceBrush(string hex, double opacity)
+    {
+        var color = (Color)ColorConverter.ConvertFromString(hex);
+        var mixed = Color.FromArgb(
+            (byte)Math.Round(255 * opacity),
+            (byte)Math.Round((color.R * 0.72) + 18),
+            (byte)Math.Round((color.G * 0.72) + 18),
+            (byte)Math.Round((color.B * 0.72) + 18));
+        var brush = new SolidColorBrush(mixed);
+        brush.Freeze();
+        return brush;
+    }
+
+    private void SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+    {
+        if (EqualityComparer<T>.Default.Equals(field, value))
+        {
+            return;
+        }
+
+        field = value;
+        OnPropertyChanged(propertyName);
+    }
+
+    private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+}
+
+public sealed record MarkerDisplayState(
+    string Title,
+    string Subtitle,
+    double X,
+    double Y,
+    Brush AccentBrush);
+
+public sealed record SectorCardState(
+    string Title,
+    string Subtitle,
+    string Description,
+    Brush AccentBrush);
+
+public sealed record DriverDisplayState(
+    int Position,
+    string Code,
+    string TeamBadge,
+    string TeamLogoPath,
+    string FullName,
+    string TeamName,
+    string DriverLine,
+    string TeamLine,
+    string GapText,
+    string SpeedText,
+    double X,
+    double Y,
+    Brush AccentBrush,
+    Brush SurfaceBrush,
+    Brush LogoPlateBrush,
+    Brush PrimaryTextBrush,
+    Brush SecondaryTextBrush)
+{
+    public string PositionLabel => $"P{Position}";
+}
+
+

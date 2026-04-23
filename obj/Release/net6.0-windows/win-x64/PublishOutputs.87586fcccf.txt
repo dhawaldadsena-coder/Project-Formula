@@ -1,0 +1,2 @@
+C:\codex\Formula 1\F1TrackMapper\publish\win-x64-v13-buddh-jaypee-fix\F1TrackMapper.pdb
+C:\codex\Formula 1\F1TrackMapper\publish\win-x64-v13-buddh-jaypee-fix\F1TrackMapper.exe
